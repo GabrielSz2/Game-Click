@@ -2,7 +2,7 @@ package entities;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.Pane;
 
 public class Controller {
@@ -17,25 +17,34 @@ public class Controller {
 	private Button play;
 	
 	@FXML
-	private ProgressIndicator indi;
+	private ProgressBar bar;
+	
 	
 	@FXML
 	public void initialize() {
+		runGame();
+	}
+	
+	private void runGame() {
 		startGame();
+		loading();
+		
 	}
 	
 	private void startGame() {
-		
-		if(indi.getProgress() == 0) {
-			startG.setVisible(false);
-		}
-		
+	
 		
 		
 		play.setOnMouseClicked(e -> {
 			
 
 		});
+		
+	}
+	
+	private void loading() {
+		
+		
 		
 	}
 	

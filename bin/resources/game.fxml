@@ -2,16 +2,36 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="entities.Controller">
+<Pane fx:id="pane" maxHeight="400.0" maxWidth="600.0" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="entities.Controller">
    <children>
-      <Pane fx:id="startG" prefHeight="400.0" prefWidth="600.0">
+      <Pane fx:id="loading" prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../../../../../../../Desktop/eaadc62a5ab66761e50c099a7a18fcf9.jpg" />
+               </image>
+            </ImageView>
+            <ProgressBar fx:id="bar" layoutX="200.0" layoutY="333.0" prefWidth="200.0" />
+            <Label blendMode="LIGHTEN" layoutX="250.0" layoutY="301.0" text="Carregando..." textFill="WHITE">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="119.0" layoutY="26.0" text="CLICK GAME" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font size="65.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="startG" prefHeight="400.0" prefWidth="600.0" visible="false">
          <children>
             <Label text="Click Game" textFill="WHITE">
                <font>
@@ -23,7 +43,7 @@
                   <Image url="@../imagens/4561977.jpg" />
                </image>
             </ImageView>
-            <Button fx:id="play" layoutX="286.0" layoutY="216.0" mnemonicParsing="false" text="play" textAlignment="CENTER" />
+            <Button fx:id="play" layoutX="286.0" layoutY="231.0" mnemonicParsing="false" text="play" textAlignment="CENTER" />
             <Label layoutX="261.0" layoutY="177.0" text="Deseja começar?" textAlignment="CENTER" textFill="WHITE" />
             <Label layoutX="260.0" layoutY="79.0" text="Bem vindo!" textAlignment="CENTER" textFill="WHITE">
                <font>
@@ -32,7 +52,6 @@
             </Label>
             <Separator layoutX="251.0" layoutY="160.0" prefHeight="25.0" prefWidth="108.0" />
             <Separator layoutX="230.0" layoutY="191.0" prefHeight="25.0" prefWidth="149.0" />
-            <ProgressIndicator fx:id="indi" layoutX="40.0" layoutY="282.0" progress="0.0" />
          </children>
       </Pane>
    </children>
