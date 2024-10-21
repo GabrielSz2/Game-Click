@@ -3,6 +3,7 @@ package entities;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 public class Game {
@@ -11,7 +12,7 @@ public class Game {
 
 	private Label clock = new Label();
 	
-	private int timeRest = 6;
+	private int timeRest = 3;
 	
 	public Game(Controller ct) {
 		this.ct = ct;
@@ -20,7 +21,7 @@ public class Game {
 	public void runGame() {
 		startGame();
 		loading();
-
+		match();
 	}
 
 	private void loading() {
@@ -41,12 +42,11 @@ public class Game {
 	}
 
 	private void startGame() {
-
-		
 		
 		clock.setStyle("-fx-font-size: 24px;");
-		clock.setLayoutX(0);
-		clock.setLayoutY(0);
+		clock.setLayoutX(286);
+		clock.setLayoutY(192);
+		clock.setTextFill(Color.WHITE);
 		
 		ct.play.setOnMouseClicked(e -> {
 			ct.startG.setVisible(false);
@@ -58,19 +58,29 @@ public class Game {
 					timeRest--;
 					System.out.println(timeRest);
 				}
-				else {
+				else if(timeRest == 0){
+					System.out.println("go");
 					clock.setText("GO!");
+					timeRest--;
 				}
-			})
-			);
+				else {
+					clock.setVisible(false);
+				}	
+			}));
 			
 			go.setCycleCount(Timeline.INDEFINITE);
 			go.play();
-			
-			
+			ct.match.getChildren().add(clock);
 			
 		});
+		
+		
+		
 
 	}
 
+	private void match() {
+		
+	}
+	
 }
