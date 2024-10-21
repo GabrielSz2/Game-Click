@@ -4,18 +4,23 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<Pane fx:id="pane" maxHeight="400.0" maxWidth="600.0" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="entities.Controller">
+<Pane fx:id="pane" maxHeight="400.0" maxWidth="600.0" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="entities.Controller">
    <children>
-      <Pane fx:id="loading" prefHeight="400.0" prefWidth="600.0">
+      <Pane fx:id="loading" prefHeight="400.0" prefWidth="600.0" visible="false">
          <children>
             <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true">
                <image>
-                  <Image url="@../../../../../../../Desktop/eaadc62a5ab66761e50c099a7a18fcf9.jpg" />
+                  <Image url="@../imagens/fundo%20loading.jpg" />
                </image>
             </ImageView>
             <ProgressBar fx:id="bar" layoutX="200.0" layoutY="333.0" prefWidth="200.0" />
@@ -40,18 +45,53 @@
             </Label>
             <ImageView fitHeight="400.0" fitWidth="600.0" focusTraversable="true" pickOnBounds="true">
                <image>
-                  <Image url="@../imagens/4561977.jpg" />
+                  <Image url="@../../../../../../Users/Gabriel%20Souza/Desktop/5acd1451c751490f19dc40834804bac1.jpg" />
                </image>
             </ImageView>
-            <Button fx:id="play" layoutX="286.0" layoutY="231.0" mnemonicParsing="false" text="play" textAlignment="CENTER" />
-            <Label layoutX="261.0" layoutY="177.0" text="Deseja começar?" textAlignment="CENTER" textFill="WHITE" />
-            <Label layoutX="260.0" layoutY="79.0" text="Bem vindo!" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="play" layoutX="279.0" layoutY="239.0" mnemonicParsing="false" text="play" textAlignment="CENTER" />
+            <Label layoutX="241.0" layoutY="98.0" text="Deseja começar?" textAlignment="CENTER" textFill="WHITE">
                <font>
-                  <Font size="18.0" />
+                  <Font name="Javanese Text" size="16.0" />
+               </font></Label>
+            <Label layoutX="210.0" layoutY="35.0" text="Bem vindo" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Calibri" size="41.0" />
                </font>
             </Label>
-            <Separator layoutX="251.0" layoutY="160.0" prefHeight="25.0" prefWidth="108.0" />
-            <Separator layoutX="230.0" layoutY="191.0" prefHeight="25.0" prefWidth="149.0" />
+            <Separator layoutX="246.0" layoutY="96.0" prefHeight="25.0" prefWidth="108.0" />
+            <Separator layoutX="224.0" layoutY="132.0" prefHeight="25.0" prefWidth="149.0" />
+            <Separator layoutX="200.0" layoutY="81.0" prefWidth="200.0">
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
+            </Separator>
+            <Circle fill="#0d0d0d" layoutX="298.0" layoutY="193.0" radius="38.0" stroke="BLACK" strokeType="INSIDE" />
+            <Text fill="WHITE" layoutX="291.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1">
+               <font>
+                  <Font name="Javanese Text" size="37.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="279.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Level">
+               <font>
+                  <Font name="Javanese Text" size="16.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <Pane fx:id="match" prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../imagens/match.jpg" />
+               </image>
+            </ImageView>
          </children>
       </Pane>
    </children>

@@ -2,50 +2,38 @@ package entities;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.Pane;
 
 public class Controller {
-
-	@FXML
-	private Pane loading;
+	
+	private Game game;
 	
 	@FXML
-	private Pane startG;
+	protected Pane loading;
 	
 	@FXML
-	private Button play;
+	protected Pane startG;
 	
 	@FXML
-	private ProgressBar bar;
+	protected Pane match;
+	
+	@FXML
+	protected Button play;
 	
 	
 	@FXML
 	public void initialize() {
-		runGame();
-	}
-	
-	private void runGame() {
-		startGame();
-		loading();
+		loading.setVisible(true);
+		startG.setVisible(false);
+		match.setVisible(false);
+		
+		game.runGame();
 		
 	}
 	
-	private void startGame() {
-	
-		
-		
-		play.setOnMouseClicked(e -> {
-			
-
-		});
-		
+	public Controller() {
+		game = new Game(this);
 	}
 	
-	private void loading() {
-		
-		
-		
-	}
 	
 }

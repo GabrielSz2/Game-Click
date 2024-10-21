@@ -1,7 +1,5 @@
 package app;
 
-
-
 import java.net.URL;
 
 import javafx.application.Application;
