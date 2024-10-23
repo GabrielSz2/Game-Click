@@ -3,6 +3,7 @@ package entities;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
 
 public class Controller {
 	
@@ -20,6 +21,8 @@ public class Controller {
 	@FXML
 	protected Button play;
 	
+	@FXML
+	protected Circle farm;
 	
 	@FXML
 	public void initialize() {
