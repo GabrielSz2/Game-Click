@@ -130,6 +130,7 @@ public class Game {
 			score.setText(i + "/");
 			plus.setText("+1");
 			generatePosition(ct.match, plus);
+			System.out.println(plus.getLayoutX() + " \\" + plus.getLayoutY());
 			
 			if(i == 10) {
 				score.setLayoutX(265);
@@ -141,6 +142,7 @@ public class Game {
 	}
 	
 	private void generatePosition(Pane pane, Control plus) {
+
 		Random random = new Random();
 		
 		double maxX = pane.getPrefHeight();
@@ -149,13 +151,16 @@ public class Game {
 		double x = random.nextDouble() * maxX;
         double y = random.nextDouble() * maxY;
         
-        if(x > 171 && x < 355 && y > 113 && y < 252) {
+        if(x > 171 && x < 355 && y > 113 && y < 252 || y < 54) {
         	while(x > 171 && x < 355) {
         		if(x > 171) {
         			x--;
         		}
         		if(x < 355) {
         			x++;
+        		}
+        		if(y<54) {
+        			y++;
         		}
         	}
         	
@@ -165,5 +170,9 @@ public class Game {
         	plus.setLayoutX(x);
         	plus.setLayoutY(y);
         }
+	}
+	
+	public void rainPlus() {
+		
 	}
 }
