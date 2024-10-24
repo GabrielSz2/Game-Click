@@ -1,13 +1,18 @@
 package entities;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
+import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 public class Game {
@@ -19,7 +24,9 @@ public class Game {
 	private Label meta = new Label();
 	private Label plus = new Label();
 	
-	int i=0;
+	private Integer i=0;
+	private List <Text> rain= new ArrayList<>();
+	Random rd = new Random();
 	
 	private int timeRest = 1;
 	
@@ -120,23 +127,33 @@ public class Game {
 		
 		score.setText("0/");
 		meta.setText("10");
-		
 		ct.match.getChildren().addAll(meta, score, plus);
 		
-		
 		ct.farm.setOnMouseClicked(e->{
-			
 			i++;
 			score.setText(i + "/");
-			plus.setText("+1");
-			generatePosition(ct.match, plus);
-			System.out.println(plus.getLayoutX() + " \\" + plus.getLayoutY());
+			
+			//Resolver a chuva de numeros
+			
+			/*
+			
+			AnimationTimer timer = new AnimationTimer() {
+	            @Override
+	            public void handle(long now) {
+	                rainDown(ct.match);
+	            }
+	        };
+			
+			timer.start();
+			*/
 			
 			if(i == 10) {
 				score.setLayoutX(265);
 				ct.match.setDisable(true);
 				ct.match.setOpacity(0.75);
 			}
+			
+			
 			
 		});
 	}
@@ -151,28 +168,36 @@ public class Game {
 		double x = random.nextDouble() * maxX;
         double y = random.nextDouble() * maxY;
         
-        if(x > 171 && x < 355 && y > 113 && y < 252 || y < 54) {
-        	while(x > 171 && x < 355) {
-        		if(x > 171) {
-        			x--;
-        		}
-        		if(x < 355) {
-        			x++;
-        		}
-        		if(y<54) {
-        			y++;
-        		}
-        	}
-        	
-        	
-        }
-        else {
-        	plus.setLayoutX(x);
-        	plus.setLayoutY(y);
-        }
+        plus.setLayoutX(x);
+      	plus.setLayoutY(y);
 	}
-	
-	public void rainPlus() {
+   
+	//Resolver a chuva de numeros
+	private void createPlus(Pane pane) {
+		Double xi = rd.nextDouble(pane.getPrefWidth());
+		Text text = new Text("+1");
+		text.setFont(Font.font(18));
+		text.setFill(Color.WHITE);
+		text.setX(xi);
+		text.setY(0);
+		
+		rain.add(text);
+		pane.getChildren().add(text);
+	}
+	//Resolver a chuva de numeros
+	private void rainDown(Pane pane) {
+		if(rain.size() < 15) {
+			createPlus(pane);
+		}
+		
+		
+		for (Text textoNumero : rain) {
+				textoNumero.setY(textoNumero.getY() + 2); // Faz o número "cair"
+        }
+		
+		rain.removeIf(textoNumero -> textoNumero.getY() > pane.getPrefHeight());
+        pane.getChildren().removeIf(n -> ((Text) n).getY() > pane.getPrefHeight());
 		
 	}
+	
 }
