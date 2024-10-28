@@ -7,7 +7,6 @@ import java.util.Random;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -23,13 +22,16 @@ public class Game {
 	private Label score = new Label();
 	private Label meta = new Label();
 	private Label plus = new Label();
-	
-	private Integer i=0;
-	private List <Text> rain= new ArrayList<>();
+
+	private Integer currentScore = 0;
+	private Integer futureMeta = 10;
+	private Integer indexPlus = 1;
+	private Boolean boo = false;
+	private List<Text> rain = new ArrayList<>();
 	Random rd = new Random();
-	
+
 	private int timeRest = 1;
-	
+
 	public Game(Controller ct) {
 		this.ct = ct;
 	}
@@ -41,36 +43,35 @@ public class Game {
 	}
 
 	private void variableStarter() {
-		
+
 		clock.setStyle("-fx-font-size: 36px;");
 		clock.setLayoutX(286);
 		clock.setLayoutY(192);
 		clock.setTextFill(Color.WHITE);
-		
+
 		score.setStyle("-fx-font-size: 18px;");
 		score.setLayoutX(273);
 		score.setLayoutY(10);
 		score.setTextFill(Color.WHITE);
-		
+
 		meta.setStyle("-fx-font-size: 18px;");
 		meta.setLayoutX(290);
 		meta.setLayoutY(10);
 		meta.setTextFill(Color.WHITE);
-		
+
 		plus.setStyle("-fx-font-size: 24px;");
 		plus.setLayoutX(120);
 		plus.setLayoutY(216);
 		plus.setTextFill(Color.WHITE);
-		
+
 		ct.farm.setVisible(false);
-		
-		
+
 	}
-	
+
 	private void loading() {
 
 		variableStarter();
-		
+
 		Timeline ti = new Timeline();
 		KeyFrame turnOffLo = new KeyFrame(Duration.seconds(3), event -> {
 			ct.loading.setVisible(false);
@@ -87,92 +88,70 @@ public class Game {
 	}
 
 	private void startGame() {
-		
-		
-		
+
 		ct.play.setOnMouseClicked(e -> {
-			
+
 			ct.startG.setVisible(false);
 			ct.match.setVisible(true);
-			
-			Timeline go = new Timeline( new KeyFrame(Duration.seconds(1), ev -> {
-				if(timeRest > 0) {
+
+			Timeline go = new Timeline(new KeyFrame(Duration.seconds(1), ev -> {
+				if (timeRest > 0) {
 					clock.setText("" + timeRest);
 					timeRest--;
-				}
-				else if(timeRest == 0){
+				} else if (timeRest == 0) {
 					System.out.println("go");
 					clock.setText("GO!");
 					clock.setLayoutX(275);
 					timeRest--;
-				}
-				else {
+				} else {
 					clock.setVisible(false);
 					ct.farm.setVisible(true);
 					meta.setVisible(true);
 					score.setVisible(true);
-				}	
+				}
 			}));
-			
-			
-			
+
 			go.setCycleCount(Timeline.INDEFINITE);
 			go.play();
 			ct.match.getChildren().add(clock);
-			
+
 		});
 	}
 
 	private void match() {
-		
-		score.setText("0/");
-		meta.setText("10");
+
+		score.setText(currentScore + "/" + futureMeta);
 		ct.match.getChildren().addAll(meta, score, plus);
-		
-		ct.farm.setOnMouseClicked(e->{
-			i++;
-			score.setText(i + "/");
-			
-			//Resolver a chuva de numeros
-			
-			/*
-			
-			AnimationTimer timer = new AnimationTimer() {
-	            @Override
-	            public void handle(long now) {
-	                rainDown(ct.match);
-	            }
-	        };
-			
+
+		AnimationTimer timer = new AnimationTimer() {
+			@Override
+			public void handle(long now) {
+				rainDown(ct.match);
+			}
+		};
+
+		ct.farm.setOnMouseClicked(e -> {
+			currentScore++;
+			score.setText(currentScore + "/" + futureMeta);
+
+			createPlus(ct.match);
 			timer.start();
-			*/
-			
-			if(i == 10) {
+
+			if (currentScore == futureMeta) {
 				score.setLayoutX(265);
 				ct.match.setDisable(true);
 				ct.match.setOpacity(0.75);
 			}
-			
-			
-			
-		});
-	}
-	
-	private void generatePosition(Pane pane, Control plus) {
 
-		Random random = new Random();
+		});
 		
-		double maxX = pane.getPrefHeight();
-		double maxY = pane.getPrefWidth();
 		
-		double x = random.nextDouble() * maxX;
-        double y = random.nextDouble() * maxY;
-        
-        plus.setLayoutX(x);
-      	plus.setLayoutY(y);
+		
+		
+		
 	}
-   
-	//Resolver a chuva de numeros
+
+	// Resolver a chuva de numeros
 	private void createPlus(Pane pane) {
 		Double xi = rd.nextDouble(pane.getPrefWidth());
 		Text text = new Text("+1");
@@ -180,24 +159,51 @@ public class Game {
 		text.setFill(Color.WHITE);
 		text.setX(xi);
 		text.setY(0);
-		
+		text.setDisable(true);
+
 		rain.add(text);
 		pane.getChildren().add(text);
 	}
-	//Resolver a chuva de numeros
+
 	private void rainDown(Pane pane) {
-		if(rain.size() < 15) {
-			createPlus(pane);
-		}
-		
-		
-		for (Text textoNumero : rain) {
+		try {
+			for (Text textoNumero : rain) {
 				textoNumero.setY(textoNumero.getY() + 2); // Faz o número "cair"
-        }
-		
-		rain.removeIf(textoNumero -> textoNumero.getY() > pane.getPrefHeight());
-        pane.getChildren().removeIf(n -> ((Text) n).getY() > pane.getPrefHeight());
+			}
+
+			rain.removeIf(textoNumero -> textoNumero.getY() > pane.getPrefHeight());
+			rain.forEach(e -> {
+				if (e != null) {
+					boo = true;
+				} else {
+					boo = false;
+				}
+			});
+
+			if (boo == true) {
+				Text tst = null;
+				if (pane.getChildren().get(indexPlus) instanceof Text) {
+					tst = (Text) pane.getChildren().get(indexPlus);
+				}
+
+				if (tst instanceof Text) {
+
+					if (tst.getY() > pane.getPrefHeight()) {
+						pane.getChildren().remove(tst);
+					}
+				} else if (indexPlus < pane.getChildren().size()) {
+					indexPlus++;
+				}
+			}
+		} catch (IndexOutOfBoundsException e) {
+
+		}
+	}
+	
+	// Resolver ...
+	private void animationFarmClick(Pane pane) {
 		
 	}
 	
+
 }
