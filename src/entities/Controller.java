@@ -2,6 +2,7 @@ package entities;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 
@@ -23,6 +24,9 @@ public class Controller {
 	
 	@FXML
 	protected Circle farm;
+	
+	@FXML
+	protected ProgressBar pBar;
 	
 	@FXML
 	public void initialize() {

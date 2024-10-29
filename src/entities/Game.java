@@ -27,10 +27,13 @@ public class Game {
 	private Integer futureMeta = 10;
 	private Integer indexPlus = 1;
 	private Boolean boo = false;
-	private List<Text> rain = new ArrayList<>();
-	Random rd = new Random();
-
+	private Text more = new Text();
+	private Integer clickPower =1;
+	private Double xp= 0.0;
 	private int timeRest = 1;
+	Random rd = new Random();
+	
+	private List<Text> rain = new ArrayList<>();
 
 	public Game(Controller ct) {
 		this.ct = ct;
@@ -72,13 +75,14 @@ public class Game {
 
 		variableStarter();
 
+		// coloquei 1 para desenvolver o match, assim que terminar, favor colocar 3;
 		Timeline ti = new Timeline();
-		KeyFrame turnOffLo = new KeyFrame(Duration.seconds(3), event -> {
+		KeyFrame turnOffLo = new KeyFrame(Duration.seconds(1), event -> {
 			ct.loading.setVisible(false);
 			System.out.println("sistema desligado");
 		});
 
-		KeyFrame turnOnSt = new KeyFrame(Duration.seconds(3), event -> {
+		KeyFrame turnOnSt = new KeyFrame(Duration.seconds(1), event -> {
 			ct.startG.setVisible(true);
 			System.out.println("Sistema ligado");
 		});
@@ -94,7 +98,8 @@ public class Game {
 			ct.startG.setVisible(false);
 			ct.match.setVisible(true);
 
-			Timeline go = new Timeline(new KeyFrame(Duration.seconds(1), ev -> {
+			// coloquei 0 para desenvolver o match, assim que terminar, favor colocar 3;
+			Timeline go = new Timeline(new KeyFrame(Duration.seconds(0.1), ev -> {
 				if (timeRest > 0) {
 					clock.setText("" + timeRest);
 					timeRest--;
@@ -136,33 +141,37 @@ public class Game {
 
 			createPlus(ct.match);
 			timer.start();
-
+			
+			animationFarmClick(ct.match);
+			
+			
+			// Resolver esse b.o aqui
+			xp = ct.pBar.getProgress();
+			xp =(double) (+ 1 / futureMeta);
+			System.out.println(xp);
+			
+			ct.pBar.setProgress(xp);
+			
 			if (currentScore == futureMeta) {
 				score.setLayoutX(265);
 				ct.match.setDisable(true);
 				ct.match.setOpacity(0.75);
 			}
 
-		});
-		
-		
-		
-		
-		
+		});	
 	}
 
-	// Resolver a chuva de numeros
 	private void createPlus(Pane pane) {
 		Double xi = rd.nextDouble(pane.getPrefWidth());
-		Text text = new Text("+1");
-		text.setFont(Font.font(18));
-		text.setFill(Color.WHITE);
-		text.setX(xi);
-		text.setY(0);
-		text.setDisable(true);
+		Text more = new Text("+" + clickPower);
+		more.setFont(Font.font(18));
+		more.setFill(Color.WHITE);
+		more.setX(xi);
+		more.setY(0);
+		more.setDisable(true);
 
-		rain.add(text);
-		pane.getChildren().add(text);
+		rain.add(more);
+		pane.getChildren().add(more);
 	}
 
 	private void rainDown(Pane pane) {
@@ -200,9 +209,16 @@ public class Game {
 		}
 	}
 	
-	// Resolver ...
 	private void animationFarmClick(Pane pane) {
+		Timeline tm = new Timeline();
+		KeyFrame ky = new KeyFrame(Duration.seconds(0.1), ev ->{
+			ct.farm.setRadius(52);
+		});
+		ct.farm.setRadius(48);
 		
+		tm.getKeyFrames().add(ky);
+		tm.play();
+
 	}
 	
 

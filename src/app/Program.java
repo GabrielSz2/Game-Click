@@ -1,6 +1,7 @@
 package app;
 
 import java.net.URL;
+import java.util.Locale;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +10,10 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class Program extends Application{
+	
+	static {
+		  Locale.setDefault(Locale.US);
+	}
 	
 	@Override
 	public void start(Stage ps) throws Exception {
@@ -25,11 +30,9 @@ public class Program extends Application{
 		ps.setScene(scene);
 		ps.show();
 		
-		
 	}
 
 	public static void main (String[] args) {
 		launch(args);
 	}
-
 }
