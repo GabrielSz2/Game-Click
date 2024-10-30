@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 
 public class Controller {
 	
@@ -27,6 +28,12 @@ public class Controller {
 	
 	@FXML
 	protected ProgressBar pBar;
+	
+	@FXML 
+	protected Text atPower;
+	
+	@FXML
+	protected Text ckPower;
 	
 	@FXML
 	public void initialize() {

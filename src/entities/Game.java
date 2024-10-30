@@ -8,6 +8,7 @@ import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -24,7 +25,7 @@ public class Game {
 	private Label plus = new Label();
 
 	private Integer currentScore = 0;
-	private Integer futureMeta = 10;
+	private Integer futureMeta = 5;
 	private Integer indexPlus = 1;
 	private Boolean boo = false;
 	private Text more = new Text();
@@ -53,14 +54,9 @@ public class Game {
 		clock.setTextFill(Color.WHITE);
 
 		score.setStyle("-fx-font-size: 18px;");
-		score.setLayoutX(273);
+		score.setLayoutX(280);
 		score.setLayoutY(10);
 		score.setTextFill(Color.WHITE);
-
-		meta.setStyle("-fx-font-size: 18px;");
-		meta.setLayoutX(290);
-		meta.setLayoutY(10);
-		meta.setTextFill(Color.WHITE);
 
 		plus.setStyle("-fx-font-size: 24px;");
 		plus.setLayoutX(120);
@@ -68,7 +64,7 @@ public class Game {
 		plus.setTextFill(Color.WHITE);
 
 		ct.farm.setVisible(false);
-
+		
 	}
 
 	private void loading() {
@@ -126,7 +122,7 @@ public class Game {
 	private void match() {
 
 		score.setText(currentScore + "/" + futureMeta);
-		ct.match.getChildren().addAll(meta, score, plus);
+		ct.match.getChildren().addAll(score, plus);
 
 		AnimationTimer timer = new AnimationTimer() {
 			@Override
@@ -135,39 +131,42 @@ public class Game {
 			}
 		};
 
+		
+		
 		ct.farm.setOnMouseClicked(e -> {
 			currentScore++;
 			score.setText(currentScore + "/" + futureMeta);
 
-			createPlus(ct.match);
+			double x = ct.farm.getLocalToParentTransform().getTx() + e.getX();
+			createPlus(ct.match, x);
 			timer.start();
-			
 			animationFarmClick(ct.match);
 			
-			
-			// Resolver esse b.o aqui
 			xp = ct.pBar.getProgress();
-			xp =(double) (+ 1 / futureMeta);
-			System.out.println(xp);
-			
+			xp += (double) (1.0 / futureMeta);
 			ct.pBar.setProgress(xp);
 			
+			
 			if (currentScore == futureMeta) {
-				score.setLayoutX(265);
 				ct.match.setDisable(true);
 				ct.match.setOpacity(0.75);
+				
+				
+				
 			}
-
 		});	
+		
+		
+		
+		
 	}
 
-	private void createPlus(Pane pane) {
-		Double xi = rd.nextDouble(pane.getPrefWidth());
+	private void createPlus(Pane pane, Double x) {
 		Text more = new Text("+" + clickPower);
 		more.setFont(Font.font(18));
 		more.setFill(Color.WHITE);
-		more.setX(xi);
-		more.setY(0);
+		more.setX(x);
+		more.setY(200);
 		more.setDisable(true);
 
 		rain.add(more);
@@ -177,10 +176,10 @@ public class Game {
 	private void rainDown(Pane pane) {
 		try {
 			for (Text textoNumero : rain) {
-				textoNumero.setY(textoNumero.getY() + 2); // Faz o número "cair"
+				textoNumero.setY(textoNumero.getY() - 2); // Faz o número "cair"
 			}
 
-			rain.removeIf(textoNumero -> textoNumero.getY() > pane.getPrefHeight());
+			rain.removeIf(textoNumero -> textoNumero.getY() < pane.getMinHeight() + 80);
 			rain.forEach(e -> {
 				if (e != null) {
 					boo = true;
@@ -196,8 +195,7 @@ public class Game {
 				}
 
 				if (tst instanceof Text) {
-
-					if (tst.getY() > pane.getPrefHeight()) {
+					if (tst.getY() < pane.getMinHeight() + 80) {
 						pane.getChildren().remove(tst);
 					}
 				} else if (indexPlus < pane.getChildren().size()) {

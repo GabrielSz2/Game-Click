@@ -14,7 +14,9 @@
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <Pane fx:id="pane" maxHeight="400.0" maxWidth="600.0" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="entities.Controller">
    <children>
@@ -31,7 +33,7 @@
                   <Font size="17.0" />
                </font>
             </Label>
-            <Label layoutX="119.0" layoutY="26.0" text="CLICK GAME" textAlignment="CENTER" textFill="WHITE">
+            <Label layoutX="82.0" layoutY="25.0" text="NINJA CLICKER" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font size="65.0" />
                </font>
@@ -90,9 +92,9 @@
                </image>
             </ImageView>
             <ProgressBar fx:id="pBar" layoutX="191.0" layoutY="36.0" prefWidth="200.0" progress="0.0" style="-fx-accent: #FF0000; -fx-control-inner-background: #000000;" />
-            <Circle fx:id="farm" layoutX="291.0" layoutY="200.0" radius="52.0" stroke="BLACK" strokeType="INSIDE">
+            <Circle fx:id="farm" layoutX="300.0" layoutY="200.0" radius="52.0" stroke="BLACK" strokeType="INSIDE">
                <fill>
-                  <LinearGradient endX="1.0" endY="1.0">
+                  <LinearGradient endX="1.0" endY="0.6824644549763033" startX="0.3127962085308057">
                      <stops>
                         <Stop>
                            <color>
@@ -108,6 +110,32 @@
                   </LinearGradient>
                </fill>
             </Circle>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="242.0" layoutX="435.0" stroke="#ff0202" strokeType="INSIDE" width="165.0" />
+            <Text fill="WHITE" layoutX="471.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="STATUS">
+               <font>
+                  <Font size="27.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="446.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ATK Power: ">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Text>
+            <Text fill="#fffdfd" layoutX="446.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click Power:">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Text>
+            <Text fx:id="ckPower" fill="WHITE" layoutX="528.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="+?">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Text>
+            <Text fx:id="atPower" fill="WHITE" layoutX="524.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="+1">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Text>
          </children>
       </Pane>
    </children>
