@@ -19,21 +19,22 @@ public class Game {
 
 	private Controller ct;
 
-	private Label clock = new Label();
-	private Label score = new Label();
-	private Label meta = new Label();
-	private Label plus = new Label();
+	private Label clock = createLabel(286, 192, 36);
+	private Label plus = createLabel(120, 216, 24);
+	private Label sts = createLabel(469, 15, 36, "Status");
+	private Label ckPower = createLabel(450, 77, 16);
+	private Label porcentageBar = createLabel(286, 24, 15);
+	private Label Slevel = createLabel(444, 200, 22, "Level: 1");
 
+	private Integer fim = 2;
 	private Integer currentScore = 0;
-	private Integer futureMeta = 5;
-	private Integer indexPlus = 1;
-	private Boolean boo = false;
-	private Text more = new Text();
-	private Integer clickPower =1;
-	private Double xp= 0.0;
-	private int timeRest = 1;
+	private Integer futureMeta = 10;
+	private Integer clickPower = 1;
+	private Double xp = 0.0;
+	private Integer timeRest = 3;
+	private Integer level = 1;
+
 	Random rd = new Random();
-	
 	private List<Text> rain = new ArrayList<>();
 
 	public Game(Controller ct) {
@@ -47,43 +48,16 @@ public class Game {
 	}
 
 	private void variableStarter() {
-
-		clock.setStyle("-fx-font-size: 36px;");
-		clock.setLayoutX(286);
-		clock.setLayoutY(192);
-		clock.setTextFill(Color.WHITE);
-
-		score.setStyle("-fx-font-size: 18px;");
-		score.setLayoutX(280);
-		score.setLayoutY(10);
-		score.setTextFill(Color.WHITE);
-
-		plus.setStyle("-fx-font-size: 24px;");
-		plus.setLayoutX(120);
-		plus.setLayoutY(216);
-		plus.setTextFill(Color.WHITE);
-
 		ct.farm.setVisible(false);
-		
 	}
 
 	private void loading() {
 
 		variableStarter();
 
-		// coloquei 1 para desenvolver o match, assim que terminar, favor colocar 3;
-		Timeline ti = new Timeline();
-		KeyFrame turnOffLo = new KeyFrame(Duration.seconds(1), event -> {
-			ct.loading.setVisible(false);
-			System.out.println("sistema desligado");
-		});
-
-		KeyFrame turnOnSt = new KeyFrame(Duration.seconds(1), event -> {
-			ct.startG.setVisible(true);
-			System.out.println("Sistema ligado");
-		});
-
-		ti.getKeyFrames().addAll(turnOffLo, turnOnSt);
+		// coloquei 1 seg para desenvolver o match, assim que terminar, favor colocar 3;
+		Timeline ti = new Timeline(new KeyFrame(Duration.seconds(3), e -> ct.loading.setVisible(false)),
+				new KeyFrame(Duration.seconds(3), e -> ct.startG.setVisible(true)));
 		ti.play();
 	}
 
@@ -94,23 +68,8 @@ public class Game {
 			ct.startG.setVisible(false);
 			ct.match.setVisible(true);
 
-			// coloquei 0 para desenvolver o match, assim que terminar, favor colocar 3;
-			Timeline go = new Timeline(new KeyFrame(Duration.seconds(0.1), ev -> {
-				if (timeRest > 0) {
-					clock.setText("" + timeRest);
-					timeRest--;
-				} else if (timeRest == 0) {
-					System.out.println("go");
-					clock.setText("GO!");
-					clock.setLayoutX(275);
-					timeRest--;
-				} else {
-					clock.setVisible(false);
-					ct.farm.setVisible(true);
-					meta.setVisible(true);
-					score.setVisible(true);
-				}
-			}));
+			// coloquei 0 para desenvolver o match, assim que terminar, favor colocar 1;
+			Timeline go = new Timeline(new KeyFrame(Duration.seconds(1), ev -> updateClock()));
 
 			go.setCycleCount(Timeline.INDEFINITE);
 			go.play();
@@ -119,10 +78,24 @@ public class Game {
 		});
 	}
 
+	private void updateClock() {
+		if (timeRest > 0) {
+			clock.setText(String.valueOf(timeRest--));
+		} else if (timeRest == 0) {
+			clock.setText("GO!");
+			clock.setLayoutX(275);
+			timeRest--;
+		} else {
+			clock.setVisible(false);
+			ct.farm.setVisible(true);
+		}
+	}
+
 	private void match() {
 
-		score.setText(currentScore + "/" + futureMeta);
-		ct.match.getChildren().addAll(score, plus);
+		porcentageBar.setText(xp + "%");
+		ct.match.getChildren().addAll(plus, sts, ckPower, porcentageBar, Slevel);
+		ckPower.setText("Click power: +" + (clickPower));
 
 		AnimationTimer timer = new AnimationTimer() {
 			@Override
@@ -131,34 +104,40 @@ public class Game {
 			}
 		};
 
-		
-		
-		ct.farm.setOnMouseClicked(e -> {
-			currentScore++;
-			score.setText(currentScore + "/" + futureMeta);
+		ct.farm.setOnMouseClicked(e -> handleFarmClick(timer, e));
 
-			double x = ct.farm.getLocalToParentTransform().getTx() + e.getX();
-			createPlus(ct.match, x);
-			timer.start();
-			animationFarmClick(ct.match);
-			
-			xp = ct.pBar.getProgress();
-			xp += (double) (1.0 / futureMeta);
-			ct.pBar.setProgress(xp);
-			
-			
-			if (currentScore == futureMeta) {
-				ct.match.setDisable(true);
-				ct.match.setOpacity(0.75);
-				
-				
-				
-			}
-		});	
-		
-		
-		
-		
+	}
+
+	private void handleFarmClick(AnimationTimer timer, MouseEvent e) {
+		currentScore++;
+		ckPower.setText("Click power: +" + (clickPower));
+		Slevel.setText("Level: " + level);
+
+		double x = ct.farm.getLocalToParentTransform().getTx() + e.getX();
+		createPlus(ct.match, x);
+		timer.start();
+		animationFarmClick(ct.match);
+
+		xp = ct.pBar.getProgress();
+		xp += (double) (1.0 / futureMeta);
+		ct.pBar.setProgress(xp);
+		porcentageBar.setText((String.format("%.0f", xp * 100)) + "%");
+
+		if (currentScore == futureMeta) {
+			ct.match.setDisable(true);
+			ct.match.setOpacity(0.75);
+			level++;
+		}
+
+		if (level == fim) {
+			endGame();
+		}
+
+	}
+
+	private void endGame() {
+			ct.match.setVisible(false);
+			ct.end.setVisible(true);
 	}
 
 	private void createPlus(Pane pane, Double x) {
@@ -174,50 +153,40 @@ public class Game {
 	}
 
 	private void rainDown(Pane pane) {
-		try {
-			for (Text textoNumero : rain) {
-				textoNumero.setY(textoNumero.getY() - 2); // Faz o número "cair"
+		List<Text> itemsToRemove = new ArrayList<>();
+
+		for (Text text : rain) {
+			text.setY(text.getY() - 2); // Faz o número "cair"
+
+			if (text.getY() < pane.getMinHeight() + 80) {
+				itemsToRemove.add(text); // Adiciona itens que saem da área visível para remoção
 			}
-
-			rain.removeIf(textoNumero -> textoNumero.getY() < pane.getMinHeight() + 80);
-			rain.forEach(e -> {
-				if (e != null) {
-					boo = true;
-				} else {
-					boo = false;
-				}
-			});
-
-			if (boo == true) {
-				Text tst = null;
-				if (pane.getChildren().get(indexPlus) instanceof Text) {
-					tst = (Text) pane.getChildren().get(indexPlus);
-				}
-
-				if (tst instanceof Text) {
-					if (tst.getY() < pane.getMinHeight() + 80) {
-						pane.getChildren().remove(tst);
-					}
-				} else if (indexPlus < pane.getChildren().size()) {
-					indexPlus++;
-				}
-			}
-		} catch (IndexOutOfBoundsException e) {
-
 		}
-	}
-	
-	private void animationFarmClick(Pane pane) {
-		Timeline tm = new Timeline();
-		KeyFrame ky = new KeyFrame(Duration.seconds(0.1), ev ->{
-			ct.farm.setRadius(52);
-		});
-		ct.farm.setRadius(48);
-		
-		tm.getKeyFrames().add(ky);
-		tm.play();
 
+		// Remove os elementos fora da área visível do `Pane`
+		pane.getChildren().removeAll(itemsToRemove);
+		rain.removeAll(itemsToRemove);
 	}
-	
+
+	private void animationFarmClick(Pane pane) {
+		Timeline tm = new Timeline(new KeyFrame(Duration.seconds(0.1), ev -> ct.farm.setRadius(52)));
+		ct.farm.setRadius(48);
+		tm.play();
+	}
+
+	private Label createLabel(double x, double y, int fontSize) {
+		Label label = new Label();
+		label.setStyle("-fx-font-size: " + fontSize + "px;");
+		label.setLayoutX(x);
+		label.setLayoutY(y);
+		label.setTextFill(Color.WHITE);
+		return label;
+	}
+
+	private Label createLabel(double x, double y, int fontSize, String text) {
+		Label label = createLabel(x, y, fontSize);
+		label.setText(text);
+		return label;
+	}
 
 }

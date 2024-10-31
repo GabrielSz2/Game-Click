@@ -4,9 +4,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.effect.Light.Distant?>
-<?import javafx.scene.effect.Lighting?>
-<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
@@ -16,7 +13,6 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <Pane fx:id="pane" maxHeight="400.0" maxWidth="600.0" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="entities.Controller">
    <children>
@@ -27,17 +23,27 @@
                   <Image url="@../imagens/fundo%20loading.jpg" />
                </image>
             </ImageView>
-            <ProgressBar fx:id="bar" layoutX="200.0" layoutY="333.0" prefWidth="200.0" />
+            <ProgressBar fx:id="bar" layoutX="200.0" layoutY="333.0" opacity="0.86" prefWidth="200.0" />
             <Label blendMode="LIGHTEN" layoutX="250.0" layoutY="301.0" text="Carregando..." textFill="WHITE">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
-            <Label layoutX="82.0" layoutY="25.0" text="NINJA CLICKER" textAlignment="CENTER" textFill="WHITE">
-               <font>
-                  <Font size="65.0" />
-               </font>
-            </Label>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="442.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagens/inicio%20ninja%202.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagens/inicio%20ninja%202.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="111.0" fitWidth="351.0" layoutX="125.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagens/ninja_clicker_Title.png" />
+               </image>
+            </ImageView>
          </children>
       </Pane>
       <Pane fx:id="startG" prefHeight="400.0" prefWidth="600.0" visible="false">
@@ -47,51 +53,48 @@
                   <Font size="47.0" />
                </font>
             </Label>
-            <ImageView fitHeight="400.0" fitWidth="600.0" focusTraversable="true" pickOnBounds="true">
+            <ImageView fitHeight="400.0" fitWidth="722.0" focusTraversable="true" layoutX="-120.0" pickOnBounds="true">
                <image>
-                  <Image url="@../imagens/fundo%20inicial.jpg" />
+                  <Image url="@../../../../../../../Desktop/b2e99c6efc25577c67b7780a60da7475.jpg" />
                </image>
             </ImageView>
-            <Button fx:id="play" layoutX="279.0" layoutY="239.0" mnemonicParsing="false" style="-fx-background-color: #000000; -fx-text-fill: #FFFFFF;" text="play" textAlignment="CENTER" />
-            <Label layoutX="241.0" layoutY="98.0" text="Deseja começar?" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="play" layoutX="269.0" layoutY="239.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="60.0" style="-fx-background-color: #FFFFFF; -fx-text-fill: #FFFFFF;" text="play" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font></Button>
+            <Label layoutX="256.0" layoutY="109.0" text="está pronto?" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Javanese Text" size="16.0" />
                </font></Label>
-            <Label layoutX="210.0" layoutY="35.0" text="Bem vindo" textAlignment="CENTER" textFill="WHITE">
+            <Label layoutX="233.0" layoutY="52.0" text="Bem vindo" textAlignment="CENTER" textFill="WHITE">
                <font>
-                  <Font name="Calibri" size="41.0" />
+                  <Font name="Gabriola" size="41.0" />
                </font>
             </Label>
-            <Separator layoutX="246.0" layoutY="96.0" prefHeight="25.0" prefWidth="108.0" />
+            <Separator layoutX="246.0" layoutY="109.0" prefHeight="25.0" prefWidth="108.0" />
             <Separator layoutX="224.0" layoutY="132.0" prefHeight="25.0" prefWidth="149.0" />
-            <Separator layoutX="200.0" layoutY="81.0" prefWidth="200.0">
-               <effect>
-                  <Lighting>
-                     <bumpInput>
-                        <Shadow />
-                     </bumpInput>
-                     <light>
-                        <Light.Distant />
-                     </light>
-                  </Lighting>
-               </effect>
-            </Separator>
-            <Circle layoutX="298.0" layoutY="193.0" radius="38.0" stroke="WHITE" strokeType="INSIDE" />
-            <ImageView fitHeight="76.0" fitWidth="49.0" layoutX="276.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true">
+            <Separator layoutX="200.0" layoutY="99.0" prefWidth="200.0" />
+            <Circle fill="#ffffff00" layoutX="298.0" layoutY="193.0" radius="38.0" stroke="WHITE" strokeType="INSIDE" />
+            <ImageView fitHeight="76.0" fitWidth="122.0" layoutX="262.0" layoutY="155.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../imagens/click.png" />
                </image>
             </ImageView>
+            <ImageView disable="true" fitHeight="63.0" fitWidth="76.0" layoutX="267.0" layoutY="224.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagens/button%20start.png" />
+               </image>
+            </ImageView>
          </children>
       </Pane>
-      <Pane fx:id="match" prefHeight="400.0" prefWidth="600.0">
+      <Pane fx:id="match" prefHeight="400.0" prefWidth="600.0" visible="false">
          <children>
             <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true">
                <image>
                   <Image url="@../imagens/match.jpg" />
                </image>
             </ImageView>
-            <ProgressBar fx:id="pBar" layoutX="191.0" layoutY="36.0" prefWidth="200.0" progress="0.0" style="-fx-accent: #FF0000; -fx-control-inner-background: #000000;" />
+            <ProgressBar fx:id="pBar" layoutX="197.0" layoutY="22.0" prefHeight="25.0" prefWidth="206.0" progress="0.0" style="-fx-accent: #FF0000; -fx-control-inner-background: #000000;" />
             <Circle fx:id="farm" layoutX="300.0" layoutY="200.0" radius="52.0" stroke="BLACK" strokeType="INSIDE">
                <fill>
                   <LinearGradient endX="1.0" endY="0.6824644549763033" startX="0.3127962085308057">
@@ -111,31 +114,21 @@
                </fill>
             </Circle>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="242.0" layoutX="435.0" stroke="#ff0202" strokeType="INSIDE" width="165.0" />
-            <Text fill="WHITE" layoutX="471.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="STATUS">
+            <Separator layoutX="504.0" layoutY="216.0" prefHeight="32.0" prefWidth="38.0" />
+         </children>
+      </Pane>
+      <Pane fx:id="end" prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../imagens/Fim%20de%20jogo.jpg" />
+               </image>
+            </ImageView>
+            <Label layoutX="134.0" layoutY="35.0" text="Fim de jogo" textAlignment="CENTER" textFill="#0dd8ff" textOverrun="CLIP">
                <font>
-                  <Font size="27.0" />
+                  <Font name="Serif Regular" size="63.0" />
                </font>
-            </Text>
-            <Text fill="WHITE" layoutX="446.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ATK Power: ">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Text>
-            <Text fill="#fffdfd" layoutX="446.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click Power:">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Text>
-            <Text fx:id="ckPower" fill="WHITE" layoutX="528.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="+?">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </Text>
-            <Text fx:id="atPower" fill="WHITE" layoutX="524.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="+1">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </Text>
+            </Label>
          </children>
       </Pane>
    </children>

@@ -21,6 +21,9 @@ public class Controller {
 	protected Pane match;
 	
 	@FXML
+	protected Pane end;
+	
+	@FXML
 	protected Button play;
 	
 	@FXML
@@ -29,17 +32,12 @@ public class Controller {
 	@FXML
 	protected ProgressBar pBar;
 	
-	@FXML 
-	protected Text atPower;
-	
-	@FXML
-	protected Text ckPower;
-	
 	@FXML
 	public void initialize() {
 		loading.setVisible(true);
 		startG.setVisible(false);
 		match.setVisible(false);
+		end.setVisible(false);
 		
 		game.runGame();
 		
