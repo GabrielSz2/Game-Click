@@ -25,8 +25,9 @@ public class Game {
 	private Label ckPower = createLabel(450, 77, 16);
 	private Label porcentageBar = createLabel(286, 24, 15);
 	private Label Slevel = createLabel(444, 200, 22, "Level: 1");
+	private Label meta = createLabel(252, 48, 12);
 
-	private Integer fim = 2;
+	private Integer fim = 100;
 	private Integer currentScore = 0;
 	private Integer futureMeta = 10;
 	private Integer clickPower = 1;
@@ -56,8 +57,8 @@ public class Game {
 		variableStarter();
 
 		// coloquei 1 seg para desenvolver o match, assim que terminar, favor colocar 3;
-		Timeline ti = new Timeline(new KeyFrame(Duration.seconds(3), e -> ct.loading.setVisible(false)),
-				new KeyFrame(Duration.seconds(3), e -> ct.startG.setVisible(true)));
+		Timeline ti = new Timeline(new KeyFrame(Duration.seconds(0.1), e -> ct.loading.setVisible(false)),
+				new KeyFrame(Duration.seconds(0.1), e -> ct.startG.setVisible(true)));
 		ti.play();
 	}
 
@@ -69,7 +70,7 @@ public class Game {
 			ct.match.setVisible(true);
 
 			// coloquei 0 para desenvolver o match, assim que terminar, favor colocar 1;
-			Timeline go = new Timeline(new KeyFrame(Duration.seconds(1), ev -> updateClock()));
+			Timeline go = new Timeline(new KeyFrame(Duration.seconds(0.1), ev -> updateClock()));
 
 			go.setCycleCount(Timeline.INDEFINITE);
 			go.play();
@@ -80,22 +81,23 @@ public class Game {
 
 	private void updateClock() {
 		if (timeRest > 0) {
-			clock.setText(String.valueOf(timeRest--));
-		} else if (timeRest == 0) {
-			clock.setText("GO!");
-			clock.setLayoutX(275);
-			timeRest--;
-		} else {
-			clock.setVisible(false);
-			ct.farm.setVisible(true);
-		}
+				clock.setText(String.valueOf(timeRest--));
+			} else if (timeRest == 0) {
+				clock.setText("GO!");
+				clock.setLayoutX(275);
+				timeRest--;
+			} else {
+				clock.setVisible(false);
+				ct.farm.setVisible(true);
+			}
 	}
 
 	private void match() {
 
 		porcentageBar.setText(xp + "%");
-		ct.match.getChildren().addAll(plus, sts, ckPower, porcentageBar, Slevel);
+		ct.match.getChildren().addAll(plus, sts, ckPower, porcentageBar, Slevel, meta);
 		ckPower.setText("Click power: +" + (clickPower));
+		meta.setText("" + futureMeta);
 
 		AnimationTimer timer = new AnimationTimer() {
 			@Override
@@ -110,6 +112,7 @@ public class Game {
 
 	private void handleFarmClick(AnimationTimer timer, MouseEvent e) {
 		currentScore++;
+		meta.setText("" + futureMeta);
 		ckPower.setText("Click power: +" + (clickPower));
 		Slevel.setText("Level: " + level);
 
@@ -123,21 +126,66 @@ public class Game {
 		ct.pBar.setProgress(xp);
 		porcentageBar.setText((String.format("%.0f", xp * 100)) + "%");
 
-		if (currentScore == futureMeta) {
-			ct.match.setDisable(true);
-			ct.match.setOpacity(0.75);
-			level++;
+		if (ct.pBar.getProgress() > 0.99) {
+			panePower();
+			System.out.println("pane power nivel " + level);
 		}
 
 		if (level == fim) {
 			endGame();
+			System.out.println("end game");
 		}
 
 	}
 
+	private void panePower() {
+		ct.match.setDisable(true);
+		ct.match.setOpacity(0.75);
+		level++;
+		futureMeta = (int) ((int) futureMeta * 1.5);
+		
+		// implementar um botão para setVisible do powers
+		
+		ct.powers.setVisible(true);
+		
+		ct.x2Power.setOnMouseClicked(e -> {
+			clickPower = clickPower * 2;
+			ct.powers.setVisible(false);
+			
+			ct.match.setDisable(false);
+			ct.match.setOpacity(1);
+			ct.pBar.setProgress(0);
+			currentScore = 0;
+		});
+
+		ct.x2Coin.setOnMouseClicked(e -> {
+			clickPower = (int) (clickPower * 1.2);
+			ct.powers.setVisible(false);
+			
+			ct.match.setDisable(false);
+			ct.match.setOpacity(1);
+			ct.pBar.setProgress(0);
+			currentScore = 0;
+		});
+
+		ct.roleta.setOnMouseClicked(e -> {
+			clickPower = (int) (clickPower * 1.2);
+			ct.powers.setVisible(false);
+			
+			ct.match.setDisable(false);
+			ct.match.setOpacity(1);
+			ct.pBar.setProgress(0);
+			currentScore = 0;
+		});
+
+		
+		
+		
+	}
+
 	private void endGame() {
-			ct.match.setVisible(false);
-			ct.end.setVisible(true);
+		ct.match.setVisible(false);
+		ct.end.setVisible(true);
 	}
 
 	private void createPlus(Pane pane, Double x) {
@@ -169,9 +217,19 @@ public class Game {
 	}
 
 	private void animationFarmClick(Pane pane) {
-		Timeline tm = new Timeline(new KeyFrame(Duration.seconds(0.1), ev -> ct.farm.setRadius(52)));
-		ct.farm.setRadius(48);
+		Timeline tm = new Timeline(new KeyFrame(Duration.seconds(0.1), ev -> {
+			animationFarm(200, 188, 206, 106);
+		}));
+		animationFarm(165, 170, 218, 118);
+
 		tm.play();
+	}
+
+	private void animationFarm(int fitW, int fitH, int x, int y) {
+		ct.farm.setFitWidth(fitW);
+		ct.farm.setFitHeight(fitH);
+		ct.farm.setLayoutX(x);
+		ct.farm.setLayoutY(y);
 	}
 
 	private Label createLabel(double x, double y, int fontSize) {

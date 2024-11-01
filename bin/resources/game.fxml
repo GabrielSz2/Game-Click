@@ -7,9 +7,6 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.paint.LinearGradient?>
-<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
@@ -55,7 +52,7 @@
             </Label>
             <ImageView fitHeight="400.0" fitWidth="722.0" focusTraversable="true" layoutX="-120.0" pickOnBounds="true">
                <image>
-                  <Image url="@../../../../../../../Desktop/b2e99c6efc25577c67b7780a60da7475.jpg" />
+                  <Image url="@../imagens/fundo%20inicial.jpg" />
                </image>
             </ImageView>
             <Button fx:id="play" layoutX="269.0" layoutY="239.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="60.0" style="-fx-background-color: #FFFFFF; -fx-text-fill: #FFFFFF;" text="play" textAlignment="CENTER" textFill="WHITE">
@@ -95,29 +92,56 @@
                </image>
             </ImageView>
             <ProgressBar fx:id="pBar" layoutX="197.0" layoutY="22.0" prefHeight="25.0" prefWidth="206.0" progress="0.0" style="-fx-accent: #FF0000; -fx-control-inner-background: #000000;" />
-            <Circle fx:id="farm" layoutX="300.0" layoutY="200.0" radius="52.0" stroke="BLACK" strokeType="INSIDE">
-               <fill>
-                  <LinearGradient endX="1.0" endY="0.6824644549763033" startX="0.3127962085308057">
-                     <stops>
-                        <Stop>
-                           <color>
-                              <Color />
-                           </color>
-                        </Stop>
-                        <Stop offset="1.0">
-                           <color>
-                              <Color red="1.0" />
-                           </color>
-                        </Stop>
-                     </stops>
-                  </LinearGradient>
-               </fill>
-            </Circle>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="242.0" layoutX="435.0" stroke="#ff0202" strokeType="INSIDE" width="165.0" />
             <Separator layoutX="504.0" layoutY="216.0" prefHeight="32.0" prefWidth="38.0" />
+            <ImageView fx:id="farm" fitHeight="170.0" fitWidth="165.0" layoutX="218.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagens/imagensFarm/progress%20bar%20skin%203.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="218.0" layoutY="47.0" text="goal:" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
-      <Pane fx:id="end" prefHeight="400.0" prefWidth="600.0">
+      <Pane fx:id="powers" prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <ImageView fx:id="roleta" fitHeight="281.0" fitWidth="149.0" layoutX="226.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../roletamaluca.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="278.0" fitWidth="150.0" layoutX="37.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true" fx:id="x2Power">
+               <image>
+                  <Image url="@../../../../../../2x_click_power.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="278.0" fitWidth="150.0" layoutX="406.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true" fx:id="x2Coin">
+               <image>
+                  <Image url="@../../../../../../2xcoin.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="173.0" layoutY="347.0" prefHeight="17.0" prefWidth="254.0" style="-fx-background-color: #000000;" text="dica: ao escolher outro sem ser o 2x click" textFill="WHITE">
+               <font>
+                  <Font name="Sitka Text" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="191.0" layoutY="364.0" style="-fx-background-color: #000000;" text="voce ganha automaticamente 1.2x power" textFill="WHITE" />
+            <Label layoutX="165.0" layoutY="19.0" style="-fx-background-color: #000000;" text="Parabéns ao concluir o nivel" textFill="WHITE">
+               <font>
+                  <Font name="Serif Regular" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="233.0" layoutY="47.0" style="-fx-background-color: #000000;" text="Escolha um prêmio" textFill="WHITE">
+               <font>
+                  <Font name="Serif Regular" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="end" prefHeight="400.0" prefWidth="600.0" visible="false">
          <children>
             <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true">
                <image>

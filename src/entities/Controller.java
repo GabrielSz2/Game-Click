@@ -3,9 +3,8 @@ package entities;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Circle;
-import javafx.scene.text.Text;
 
 public class Controller {
 	
@@ -21,13 +20,25 @@ public class Controller {
 	protected Pane match;
 	
 	@FXML
+	protected Pane powers;
+	
+	@FXML
 	protected Pane end;
 	
 	@FXML
 	protected Button play;
 	
 	@FXML
-	protected Circle farm;
+	protected ImageView farm;
+
+	@FXML
+	protected ImageView x2Coin;
+	
+	@FXML
+	protected ImageView x2Power;
+	
+	@FXML
+	protected ImageView roleta;
 	
 	@FXML
 	protected ProgressBar pBar;
@@ -37,6 +48,7 @@ public class Controller {
 		loading.setVisible(true);
 		startG.setVisible(false);
 		match.setVisible(false);
+		powers.setVisible(false);
 		end.setVisible(false);
 		
 		game.runGame();
