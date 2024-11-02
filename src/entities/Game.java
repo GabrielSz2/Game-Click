@@ -7,6 +7,7 @@ import java.util.Random;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -24,13 +25,20 @@ public class Game {
 	private Label sts = createLabel(469, 15, 36, "Status");
 	private Label ckPower = createLabel(450, 77, 16);
 	private Label porcentageBar = createLabel(286, 24, 15);
-	private Label Slevel = createLabel(444, 200, 22, "Level: 1");
+	private Label showLevel = createLabel(444, 200, 22, "Level: 1");
+	private Label showCoins = createLabel(450, 100, 16);
 	private Label meta = createLabel(252, 48, 12);
-
-	private Integer fim = 100;
+	private Label choosePower = createLabel(150, 250, 28, "Escolha sua recompensa!");
+	private Label gainCoin = createLabel(230, 380, 16);
+	
+	private Button ready = new Button();
+	
+	private Integer multiCoins = 1;
+	private Integer coins = 0;
+	private Integer end = 100;
 	private Integer currentScore = 0;
 	private Integer futureMeta = 10;
-	private Integer clickPower = 1;
+	private double clickPower = 1.0;
 	private Double xp = 0.0;
 	private Integer timeRest = 3;
 	private Integer level = 1;
@@ -81,24 +89,26 @@ public class Game {
 
 	private void updateClock() {
 		if (timeRest > 0) {
-				clock.setText(String.valueOf(timeRest--));
-			} else if (timeRest == 0) {
-				clock.setText("GO!");
-				clock.setLayoutX(275);
-				timeRest--;
-			} else {
-				clock.setVisible(false);
-				ct.farm.setVisible(true);
-			}
+			clock.setText(String.valueOf(timeRest--));
+		} else if (timeRest == 0) {
+			clock.setText("GO!");
+			clock.setLayoutX(275);
+			timeRest--;
+		} else {
+			clock.setVisible(false);
+			ct.farm.setVisible(true);
+		}
 	}
 
 	private void match() {
 
 		porcentageBar.setText(xp + "%");
-		ct.match.getChildren().addAll(plus, sts, ckPower, porcentageBar, Slevel, meta);
-		ckPower.setText("Click power: +" + (clickPower));
+		ct.match.getChildren().addAll(plus, showCoins, sts, ckPower, porcentageBar, showLevel, meta);
+		ct.powers.getChildren().add(gainCoin);
+		ckPower.setText("Click power: +" + ((int)clickPower));
 		meta.setText("" + futureMeta);
-
+		showCoins.setText("Coins: " + coins + "\nCoin multiplier: " + multiCoins + "x");
+		
 		AnimationTimer timer = new AnimationTimer() {
 			@Override
 			public void handle(long now) {
@@ -112,10 +122,15 @@ public class Game {
 
 	private void handleFarmClick(AnimationTimer timer, MouseEvent e) {
 		currentScore++;
-		meta.setText("" + futureMeta);
-		ckPower.setText("Click power: +" + (clickPower));
-		Slevel.setText("Level: " + level);
-
+		meta.setText("" + (int)(futureMeta * clickPower));
+		ckPower.setText("Click power: +" + ((int)clickPower));
+		showLevel.setText("Level: " + level);
+		showCoins.setText("Coins: " + coins + "\nCoin multiplier: " + multiCoins + "x");
+		gainCoin.setStyle("-fx-background-color: black; " +
+	               "-fx-font-family: 'Sitka Test'; " +
+	               "-fx-font-size: 16px; " +
+	               "-fx-text-fill: white;");
+		
 		double x = ct.farm.getLocalToParentTransform().getTx() + e.getX();
 		createPlus(ct.match, x);
 		timer.start();
@@ -128,10 +143,12 @@ public class Game {
 
 		if (ct.pBar.getProgress() > 0.99) {
 			panePower();
+			ct.pane.getChildren().add(ready);
+			ct.pane.getChildren().add(choosePower);
 			System.out.println("pane power nivel " + level);
 		}
 
-		if (level == fim) {
+		if (level == end) {
 			endGame();
 			System.out.println("end game");
 		}
@@ -143,44 +160,61 @@ public class Game {
 		ct.match.setOpacity(0.75);
 		level++;
 		futureMeta = (int) ((int) futureMeta * 1.5);
-		
+
 		// implementar um botão para setVisible do powers
+		ready.setLayoutX(230);
+		ready.setLayoutY(300);
+		ready.setText("Escolher");
+		ready.setStyle("-fx-font-size: " + 28 + "px;");
+		ready.setVisible(true);
+		choosePower.setVisible(true);
 		
-		ct.powers.setVisible(true);
-		
-		ct.x2Power.setOnMouseClicked(e -> {
-			clickPower = clickPower * 2;
-			ct.powers.setVisible(false);
-			
-			ct.match.setDisable(false);
-			ct.match.setOpacity(1);
-			ct.pBar.setProgress(0);
-			currentScore = 0;
+		ready.setOnMouseClicked(evnt -> {
+			if(coins != 0) {coins += 1 * multiCoins;}
+			if(coins == 0) {coins++;}
+			gainCoin.setText("Você ganhou " + 1 * multiCoins + " coins");
+			ready.setVisible(false);
+			choosePower.setVisible(false);
+			ct.powers.setVisible(true);
+
+			ct.x2Power.setOnMouseClicked(e -> {
+				clickPower = clickPower * 2;
+				ct.powers.setVisible(false);
+
+				ct.match.setDisable(false);
+				ct.match.setOpacity(1);
+				ct.pBar.setProgress(0);
+				currentScore = 0;
+			});
+
+			ct.x2Coin.setOnMouseClicked(e -> {
+				clickPower = (clickPower * 1.5);
+				multiCoins = multiCoins * 2;
+				ct.powers.setVisible(false);
+
+				
+				
+				
+				ct.match.setDisable(false);
+				ct.match.setOpacity(1);
+				ct.pBar.setProgress(0);
+				currentScore = 0;
+			});
+
+			ct.roleta.setOnMouseClicked(e -> {
+				clickPower = (int) (clickPower * 1.2);
+				ct.powers.setVisible(false);
+
+				
+				
+				ct.match.setDisable(false);
+				ct.match.setOpacity(1);
+				ct.pBar.setProgress(0);
+				currentScore = 0;
+			});
+
 		});
 
-		ct.x2Coin.setOnMouseClicked(e -> {
-			clickPower = (int) (clickPower * 1.2);
-			ct.powers.setVisible(false);
-			
-			ct.match.setDisable(false);
-			ct.match.setOpacity(1);
-			ct.pBar.setProgress(0);
-			currentScore = 0;
-		});
-
-		ct.roleta.setOnMouseClicked(e -> {
-			clickPower = (int) (clickPower * 1.2);
-			ct.powers.setVisible(false);
-			
-			ct.match.setDisable(false);
-			ct.match.setOpacity(1);
-			ct.pBar.setProgress(0);
-			currentScore = 0;
-		});
-
-		
-		
-		
 	}
 
 	private void endGame() {
@@ -189,7 +223,7 @@ public class Game {
 	}
 
 	private void createPlus(Pane pane, Double x) {
-		Text more = new Text("+" + clickPower);
+		Text more = new Text("+" + (int)(clickPower));
 		more.setFont(Font.font(18));
 		more.setFill(Color.WHITE);
 		more.setX(x);
@@ -204,14 +238,14 @@ public class Game {
 		List<Text> itemsToRemove = new ArrayList<>();
 
 		for (Text text : rain) {
-			text.setY(text.getY() - 2); // Faz o número "cair"
+			text.setY(text.getY() - 2); 
 
 			if (text.getY() < pane.getMinHeight() + 80) {
-				itemsToRemove.add(text); // Adiciona itens que saem da área visível para remoção
+				itemsToRemove.add(text); 
 			}
 		}
 
-		// Remove os elementos fora da área visível do `Pane`
+		
 		pane.getChildren().removeAll(itemsToRemove);
 		rain.removeAll(itemsToRemove);
 	}

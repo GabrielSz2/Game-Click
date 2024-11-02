@@ -11,6 +11,9 @@ public class Controller {
 	private Game game;
 	
 	@FXML
+	protected Pane pane;
+	
+	@FXML
 	protected Pane loading;
 	
 	@FXML
