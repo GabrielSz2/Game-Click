@@ -110,17 +110,17 @@
          <children>
             <ImageView fx:id="roleta" fitHeight="281.0" fitWidth="149.0" layoutX="226.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../../roletamaluca.png" />
+                  <Image url="@../imagens/roletamaluca.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="278.0" fitWidth="150.0" layoutX="37.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true" fx:id="x2Power">
                <image>
-                  <Image url="@../../../../../../2x_click_power.png" />
+                  <Image url="@../imagens/2x_click_power.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="278.0" fitWidth="150.0" layoutX="406.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true" fx:id="x2Coin">
                <image>
-                  <Image url="@../../../../../../2xcoin.png" />
+                  <Image url="@../imagens/2xcoin.png" />
                </image>
             </ImageView>
             <Label layoutX="173.0" layoutY="347.0" prefHeight="17.0" prefWidth="254.0" style="-fx-background-color: #000000;" text="dica: ao escolher outro sem ser o 2x click" textFill="WHITE">
