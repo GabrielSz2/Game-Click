@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="pane" maxHeight="400.0" maxWidth="600.0" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="entities.Controller">
+<Pane fx:id="pane" maxHeight="400.0" maxWidth="600.0" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="entities.Controller">
    <children>
       <Pane fx:id="loading" prefHeight="400.0" prefWidth="600.0" visible="false">
          <children>
@@ -106,7 +106,7 @@
             </Label>
          </children>
       </Pane>
-      <Pane fx:id="powers" prefHeight="400.0" prefWidth="600.0">
+      <Pane fx:id="powers" prefHeight="400.0" prefWidth="600.0" visible="false">
          <children>
             <ImageView fx:id="roleta" fitHeight="281.0" fitWidth="149.0" layoutX="226.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -141,6 +141,7 @@
             </Label>
          </children>
       </Pane>
+      <Pane fx:id="paneRoll" prefHeight="400.0" prefWidth="600.0" />
       <Pane fx:id="end" prefHeight="400.0" prefWidth="600.0" visible="false">
          <children>
             <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true">

@@ -65,8 +65,8 @@ public class Game {
 		variableStarter();
 
 		// coloquei 1 seg para desenvolver o match, assim que terminar, favor colocar 3;
-		Timeline ti = new Timeline(new KeyFrame(Duration.seconds(0.1), e -> ct.loading.setVisible(false)),
-				new KeyFrame(Duration.seconds(0.1), e -> ct.startG.setVisible(true)));
+		Timeline ti = new Timeline(new KeyFrame(Duration.seconds(3), e -> ct.loading.setVisible(false)),
+				new KeyFrame(Duration.seconds(3), e -> ct.startG.setVisible(true)));
 		ti.play();
 	}
 
@@ -78,7 +78,7 @@ public class Game {
 			ct.match.setVisible(true);
 
 			// coloquei 0 para desenvolver o match, assim que terminar, favor colocar 1;
-			Timeline go = new Timeline(new KeyFrame(Duration.seconds(0.1), ev -> updateClock()));
+			Timeline go = new Timeline(new KeyFrame(Duration.seconds(1), ev -> updateClock()));
 
 			go.setCycleCount(Timeline.INDEFINITE);
 			go.play();
@@ -101,7 +101,11 @@ public class Game {
 	}
 
 	private void match() {
-
+		ct.pane.getChildren().add(ready);
+		ct.pane.getChildren().add(choosePower);
+		choosePower.setVisible(false);
+		ready.setVisible(false);
+		
 		porcentageBar.setText(xp + "%");
 		ct.match.getChildren().addAll(plus, showCoins, sts, ckPower, porcentageBar, showLevel, meta);
 		ct.powers.getChildren().add(gainCoin);
@@ -143,8 +147,6 @@ public class Game {
 
 		if (ct.pBar.getProgress() > 0.99) {
 			panePower();
-			ct.pane.getChildren().add(ready);
-			ct.pane.getChildren().add(choosePower);
 			System.out.println("pane power nivel " + level);
 		}
 
@@ -192,9 +194,6 @@ public class Game {
 				multiCoins = multiCoins * 2;
 				ct.powers.setVisible(false);
 
-				
-				
-				
 				ct.match.setDisable(false);
 				ct.match.setOpacity(1);
 				ct.pBar.setProgress(0);

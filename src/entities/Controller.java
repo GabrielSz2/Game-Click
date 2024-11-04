@@ -26,6 +26,9 @@ public class Controller {
 	protected Pane powers;
 	
 	@FXML
+	protected Pane paneRoll;
+	
+	@FXML
 	protected Pane end;
 	
 	@FXML
@@ -52,6 +55,7 @@ public class Controller {
 		startG.setVisible(false);
 		match.setVisible(false);
 		powers.setVisible(false);
+		paneRoll.setVisible(false);
 		end.setVisible(false);
 		
 		game.runGame();
