@@ -6,9 +6,12 @@ import java.util.Random;
 
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
+import javafx.animation.RotateTransition;
 import javafx.animation.Timeline;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -65,8 +68,8 @@ public class Game {
 		variableStarter();
 
 		// coloquei 1 seg para desenvolver o match, assim que terminar, favor colocar 3;
-		Timeline ti = new Timeline(new KeyFrame(Duration.seconds(3), e -> ct.loading.setVisible(false)),
-				new KeyFrame(Duration.seconds(3), e -> ct.startG.setVisible(true)));
+		Timeline ti = new Timeline(new KeyFrame(Duration.seconds(0.1), e -> ct.loading.setVisible(false)),
+				new KeyFrame(Duration.seconds(0.1), e -> ct.startG.setVisible(true)));
 		ti.play();
 	}
 
@@ -78,7 +81,7 @@ public class Game {
 			ct.match.setVisible(true);
 
 			// coloquei 0 para desenvolver o match, assim que terminar, favor colocar 1;
-			Timeline go = new Timeline(new KeyFrame(Duration.seconds(1), ev -> updateClock()));
+			Timeline go = new Timeline(new KeyFrame(Duration.seconds(0.1), ev -> updateClock()));
 
 			go.setCycleCount(Timeline.INDEFINITE);
 			go.play();
@@ -122,6 +125,8 @@ public class Game {
 
 		ct.farm.setOnMouseClicked(e -> handleFarmClick(timer, e));
 
+		
+		
 	}
 
 	private void handleFarmClick(AnimationTimer timer, MouseEvent e) {
@@ -171,6 +176,8 @@ public class Game {
 		ready.setVisible(true);
 		choosePower.setVisible(true);
 		
+		
+		
 		ready.setOnMouseClicked(evnt -> {
 			if(coins != 0) {coins += 1 * multiCoins;}
 			if(coins == 0) {coins++;}
@@ -200,16 +207,21 @@ public class Game {
 				currentScore = 0;
 			});
 
-			ct.roleta.setOnMouseClicked(e -> {
+			ct.roletaMaluca.setOnMouseClicked(e -> {
 				clickPower = (int) (clickPower * 1.2);
 				ct.powers.setVisible(false);
-
+				ct.paneRoll.setVisible(true);
+				
+				ct.btRoll.setOnMouseClicked(ev -> {
+					Random xyz = new Random();
+					int numberForRoll = xyz.nextInt(361);
+					
+					roll(ct.roleta, numberForRoll);
+					
+					// implementar a recompensa da roleta;
+				});
 				
 				
-				ct.match.setDisable(false);
-				ct.match.setOpacity(1);
-				ct.pBar.setProgress(0);
-				currentScore = 0;
 			});
 
 		});
@@ -278,6 +290,13 @@ public class Game {
 		Label label = createLabel(x, y, fontSize);
 		label.setText(text);
 		return label;
+	}
+	
+	private void roll(ImageView roll, int angulo) {
+		RotateTransition rotateTransition = new RotateTransition(Duration.seconds(1), roll);
+	    rotateTransition.setByAngle(angulo * 100); 
+	    rotateTransition.setCycleCount(1);   
+	    rotateTransition.play();
 	}
 
 }

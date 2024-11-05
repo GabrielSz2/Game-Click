@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="pane" maxHeight="400.0" maxWidth="600.0" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="entities.Controller">
+<Pane fx:id="pane" maxHeight="400.0" maxWidth="600.0" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="entities.Controller">
    <children>
       <Pane fx:id="loading" prefHeight="400.0" prefWidth="600.0" visible="false">
          <children>
@@ -108,7 +108,7 @@
       </Pane>
       <Pane fx:id="powers" prefHeight="400.0" prefWidth="600.0" visible="false">
          <children>
-            <ImageView fx:id="roleta" fitHeight="281.0" fitWidth="149.0" layoutX="226.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="roletaMaluca" fitHeight="281.0" fitWidth="149.0" layoutX="226.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../imagens/roletamaluca.png" />
                </image>
@@ -141,7 +141,78 @@
             </Label>
          </children>
       </Pane>
-      <Pane fx:id="paneRoll" prefHeight="400.0" prefWidth="600.0" />
+      <Pane fx:id="paneRoll" prefHeight="400.0" prefWidth="600.0" visible="false">
+         <children>
+            <ImageView fx:id="roleta" fitHeight="273.0" fitWidth="305.0" layoutX="154.0" layoutY="64.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagens/roletaX.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="63.0" fitWidth="85.0" layoutX="270.0" layoutY="163.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagens/seta.png" />
+               </image>
+            </ImageView>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#000000be" height="200.0" layoutX="14.0" layoutY="160.0" stroke="BLACK" strokeType="INSIDE" width="124.0" />
+            <Label layoutX="38.0" layoutY="171.0" text="Chances:" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="38.0" layoutY="200.0" text="Skin: 1.6%" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Label>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" height="15.0" layoutX="19.0" layoutY="200.0" stroke="BLACK" strokeType="INSIDE" width="17.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="15.0" layoutX="19.0" layoutY="220.0" stroke="BLACK" strokeType="INSIDE" width="17.0" />
+            <Label layoutX="38.0" layoutY="220.0" text="Wallpaper: 1.6%" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Label>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8c52ff" height="15.0" layoutX="19.0" layoutY="240.0" stroke="BLACK" strokeType="INSIDE" width="17.0" />
+            <Label layoutX="38.0" layoutY="240.0" text="+1 Auto: 16%" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Label>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0cc0df" height="15.0" layoutX="19.0" layoutY="260.0" stroke="BLACK" strokeType="INSIDE" width="17.0" />
+            <Label layoutX="38.0" layoutY="260.0" text="Turbo: 16%" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Label>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00bf63" height="15.0" layoutX="19.0" layoutY="280.0" stroke="BLACK" strokeType="INSIDE" width="17.0" />
+            <Label layoutX="38.0" layoutY="280.0" text="5x Power: 16%" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Label>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#004aad" height="15.0" layoutX="19.0" layoutY="300.0" stroke="BLACK" strokeType="INSIDE" width="17.0" />
+            <Label layoutX="38.0" layoutY="300.0" text="10x Coin: 16%" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Label>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d9d9d9" height="15.0" layoutX="19.0" layoutY="320.0" stroke="BLACK" strokeType="INSIDE" width="17.0" />
+            <Label layoutX="38.0" layoutY="320.0" text="Perdeu: 16%" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Label>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffde59" height="15.0" layoutX="19.0" layoutY="340.0" stroke="BLACK" strokeType="INSIDE" width="17.0" />
+            <Label layoutX="38.0" layoutY="340.0" text="Coin: 16%" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Label>
+            <Button fx:id="btRoll" layoutX="269.0" layoutY="339.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="63.0" style="-fx-background-color: #000000;" text="Rodar" textFill="WHITE">
+               <font>
+                  <Font name="Serif Regular" size="12.0" />
+               </font>
+            </Button>
+         </children></Pane>
       <Pane fx:id="end" prefHeight="400.0" prefWidth="600.0" visible="false">
          <children>
             <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true">
