@@ -8,7 +8,6 @@ import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.RotateTransition;
 import javafx.animation.Timeline;
-import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -17,6 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
 public class Game {
@@ -207,23 +207,98 @@ public class Game {
 				currentScore = 0;
 			});
 
-			ct.roletaMaluca.setOnMouseClicked(e -> {
+			ct.crazyRoulette.setOnMouseClicked(e -> {
 				clickPower = (int) (clickPower * 1.2);
 				ct.powers.setVisible(false);
 				ct.paneRoll.setVisible(true);
+				ct.btRoll.setDisable(false);
 				
 				ct.btRoll.setOnMouseClicked(ev -> {
 					Random xyz = new Random();
 					int numberForRoll = xyz.nextInt(361);
 					
-					roll(ct.roleta, numberForRoll);
+					roll(ct.roulette, numberForRoll);
 					
 					// implementar a recompensa da roleta;
+					
+					Timeline ti = new Timeline(new KeyFrame(Duration.seconds(5), evs -> {
+						ct.powers.setVisible(false);
+						ct.paneRoll.setVisible(false);
+						
+						
+						ct.match.setDisable(false);
+						ct.match.setOpacity(1);
+						ct.pBar.setProgress(0);
+						currentScore = 0;
+					}));
+					
+					ti.play();
+					
+					if (numberForRoll > 0 && numberForRoll < 7){
+						// wallpaper secret
+						
+						System.out.println("wall secret");
+						
+						
+					}
+
+					if (numberForRoll > 6 && numberForRoll < 13){
+						// skin secret
+						System.out.println("Skin secret");
+						
+						
+					}
+
+					if (numberForRoll > 12 && numberForRoll < 71){
+						if(coins != 0) {coins += 100 * multiCoins;}
+						if(coins == 0) {coins += 100;}
+						
+						
+						
+						System.out.println("ganhou na mega");
+					}
+
+					if (numberForRoll > 70 && numberForRoll < 129){
+						
+						
+						System.out.println("Ganhou nada hahaha");
+					}
+
+					if (numberForRoll > 128 && numberForRoll < 187){
+						
+						
+						System.out.println("ganhou multi coins");
+					}
+
+					if (numberForRoll > 186 && numberForRoll < 246){
+						
+						
+						System.out.println("fez amor com o suco?");
+					}
+
+					if (numberForRoll > 247 && numberForRoll < 304){
+						// Turbo
+						
+						
+						
+						System.out.println("virou o flash rapaz?");
+					}
+
+					if (numberForRoll > 303 && numberForRoll < 361){
+						// +1 auto
+						
+						
+						
+						System.out.println("parabens voce ganhou mais um braço");
+					}
+					
+					
+					
+					
+					ct.btRoll.setDisable(true);
 				});
 				
-				
 			});
-
 		});
 
 	}
@@ -293,10 +368,25 @@ public class Game {
 	}
 	
 	private void roll(ImageView roll, int angulo) {
+		Rotate rotate = new Rotate();
+		roll.getTransforms().add(rotate);
+		
 		RotateTransition rotateTransition = new RotateTransition(Duration.seconds(1), roll);
 	    rotateTransition.setByAngle(angulo * 100); 
 	    rotateTransition.setCycleCount(1);   
 	    rotateTransition.play();
+	    
+	    rotateTransition.setOnFinished(event -> {
+	    	double angleFinal = rotate.getAngle();
+	    	System.out.println("angle final: " + angleFinal);
+	    	
+	    	
+	    	
+	    	
+			
+	    });
+	    
+	    
 	}
 
 }

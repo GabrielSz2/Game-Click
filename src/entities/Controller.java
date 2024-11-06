@@ -44,10 +44,10 @@ public class Controller {
 	protected ImageView x2Power;
 	
 	@FXML
-	protected ImageView roletaMaluca;
+	protected ImageView crazyRoulette;
 	
 	@FXML
-	protected ImageView roleta;
+	protected ImageView roulette;
 	
 	@FXML
 	protected ProgressBar pBar;
