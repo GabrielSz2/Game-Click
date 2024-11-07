@@ -8,6 +8,7 @@ import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.RotateTransition;
 import javafx.animation.Timeline;
+import javafx.animation.Transition;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -33,9 +34,11 @@ public class Game {
 	private Label meta = createLabel(252, 48, 12);
 	private Label choosePower = createLabel(150, 250, 28, "Escolha sua recompensa!");
 	private Label gainCoin = createLabel(230, 380, 16);
+	private Label resultRoll = createLabel(216, 12, 18);
 	
 	private Button ready = new Button();
-	
+
+	private Integer autoClickers = 0;
 	private Integer multiCoins = 1;
 	private Integer coins = 0;
 	private Integer end = 100;
@@ -108,14 +111,15 @@ public class Game {
 		ct.pane.getChildren().add(choosePower);
 		choosePower.setVisible(false);
 		ready.setVisible(false);
-		
+
 		porcentageBar.setText(xp + "%");
 		ct.match.getChildren().addAll(plus, showCoins, sts, ckPower, porcentageBar, showLevel, meta);
 		ct.powers.getChildren().add(gainCoin);
-		ckPower.setText("Click power: +" + ((int)clickPower));
+		ct.paneRoll.getChildren().add(resultRoll);
+		ckPower.setText("Click power: +" + ((int) clickPower));
 		meta.setText("" + futureMeta);
 		showCoins.setText("Coins: " + coins + "\nCoin multiplier: " + multiCoins + "x");
-		
+
 		AnimationTimer timer = new AnimationTimer() {
 			@Override
 			public void handle(long now) {
@@ -125,26 +129,26 @@ public class Game {
 
 		ct.farm.setOnMouseClicked(e -> handleFarmClick(timer, e));
 
-		
-		
 	}
 
 	private void handleFarmClick(AnimationTimer timer, MouseEvent e) {
 		currentScore++;
-		meta.setText("" + (int)(futureMeta * clickPower));
-		ckPower.setText("Click power: +" + ((int)clickPower));
+		meta.setText("" + (int) (futureMeta * clickPower));
+		ckPower.setText("Click power: +" + ((int) clickPower));
 		showLevel.setText("Level: " + level);
 		showCoins.setText("Coins: " + coins + "\nCoin multiplier: " + multiCoins + "x");
-		gainCoin.setStyle("-fx-background-color: black; " +
-	               "-fx-font-family: 'Sitka Test'; " +
-	               "-fx-font-size: 16px; " +
-	               "-fx-text-fill: white;");
-		
+		gainCoin.setStyle("-fx-background-color: black; " + "-fx-font-family: 'Sitka Test'; " + "-fx-font-size: 16px; "
+				+ "-fx-text-fill: white;");
+		resultRoll.setStyle("-fx-background-color: white; " + "-fx-font-family: 'Serif'; " + "-fx-font-size: 18px; "
+				+ "-fx-text-fill: black;");
+
 		double x = ct.farm.getLocalToParentTransform().getTx() + e.getX();
 		createPlus(ct.match, x);
 		timer.start();
 		animationFarmClick(ct.match);
 
+		
+		
 		xp = ct.pBar.getProgress();
 		xp += (double) (1.0 / futureMeta);
 		ct.pBar.setProgress(xp);
@@ -164,7 +168,7 @@ public class Game {
 
 	private void panePower() {
 		ct.match.setDisable(true);
-		ct.match.setOpacity(0.75);
+		ct.match.setOpacity(0.3);
 		level++;
 		futureMeta = (int) ((int) futureMeta * 1.5);
 
@@ -175,12 +179,9 @@ public class Game {
 		ready.setStyle("-fx-font-size: " + 28 + "px;");
 		ready.setVisible(true);
 		choosePower.setVisible(true);
-		
-		
-		
+
 		ready.setOnMouseClicked(evnt -> {
-			if(coins != 0) {coins += 1 * multiCoins;}
-			if(coins == 0) {coins++;}
+			addCoins(1);
 			gainCoin.setText("Você ganhou " + 1 * multiCoins + " coins");
 			ready.setVisible(false);
 			choosePower.setVisible(false);
@@ -197,7 +198,7 @@ public class Game {
 			});
 
 			ct.x2Coin.setOnMouseClicked(e -> {
-				clickPower = (clickPower * 1.5);
+				clickPower = (clickPower * 1.2);
 				multiCoins = multiCoins * 2;
 				ct.powers.setVisible(false);
 
@@ -208,7 +209,7 @@ public class Game {
 			});
 
 			ct.crazyRoulette.setOnMouseClicked(e -> {
-				clickPower = (int) (clickPower * 1.2);
+				clickPower = (clickPower * 1.2);
 				ct.powers.setVisible(false);
 				ct.paneRoll.setVisible(true);
 				ct.btRoll.setDisable(false);
@@ -216,88 +217,10 @@ public class Game {
 				ct.btRoll.setOnMouseClicked(ev -> {
 					Random xyz = new Random();
 					int numberForRoll = xyz.nextInt(361);
-					
 					roll(ct.roulette, numberForRoll);
-					
-					// implementar a recompensa da roleta;
-					
-					Timeline ti = new Timeline(new KeyFrame(Duration.seconds(5), evs -> {
-						ct.powers.setVisible(false);
-						ct.paneRoll.setVisible(false);
-						
-						
-						ct.match.setDisable(false);
-						ct.match.setOpacity(1);
-						ct.pBar.setProgress(0);
-						currentScore = 0;
-					}));
-					
-					ti.play();
-					
-					if (numberForRoll > 0 && numberForRoll < 7){
-						// wallpaper secret
-						
-						System.out.println("wall secret");
-						
-						
-					}
-
-					if (numberForRoll > 6 && numberForRoll < 13){
-						// skin secret
-						System.out.println("Skin secret");
-						
-						
-					}
-
-					if (numberForRoll > 12 && numberForRoll < 71){
-						if(coins != 0) {coins += 100 * multiCoins;}
-						if(coins == 0) {coins += 100;}
-						
-						
-						
-						System.out.println("ganhou na mega");
-					}
-
-					if (numberForRoll > 70 && numberForRoll < 129){
-						
-						
-						System.out.println("Ganhou nada hahaha");
-					}
-
-					if (numberForRoll > 128 && numberForRoll < 187){
-						
-						
-						System.out.println("ganhou multi coins");
-					}
-
-					if (numberForRoll > 186 && numberForRoll < 246){
-						
-						
-						System.out.println("fez amor com o suco?");
-					}
-
-					if (numberForRoll > 247 && numberForRoll < 304){
-						// Turbo
-						
-						
-						
-						System.out.println("virou o flash rapaz?");
-					}
-
-					if (numberForRoll > 303 && numberForRoll < 361){
-						// +1 auto
-						
-						
-						
-						System.out.println("parabens voce ganhou mais um braço");
-					}
-					
-					
-					
-					
 					ct.btRoll.setDisable(true);
 				});
-				
+
 			});
 		});
 
@@ -309,7 +232,7 @@ public class Game {
 	}
 
 	private void createPlus(Pane pane, Double x) {
-		Text more = new Text("+" + (int)(clickPower));
+		Text more = new Text("+" + (int) (clickPower));
 		more.setFont(Font.font(18));
 		more.setFill(Color.WHITE);
 		more.setX(x);
@@ -324,14 +247,13 @@ public class Game {
 		List<Text> itemsToRemove = new ArrayList<>();
 
 		for (Text text : rain) {
-			text.setY(text.getY() - 2); 
+			text.setY(text.getY() - 2);
 
 			if (text.getY() < pane.getMinHeight() + 80) {
-				itemsToRemove.add(text); 
+				itemsToRemove.add(text);
 			}
 		}
 
-		
 		pane.getChildren().removeAll(itemsToRemove);
 		rain.removeAll(itemsToRemove);
 	}
@@ -366,27 +288,78 @@ public class Game {
 		label.setText(text);
 		return label;
 	}
-	
+
 	private void roll(ImageView roll, int angulo) {
 		Rotate rotate = new Rotate();
 		roll.getTransforms().add(rotate);
-		
+
 		RotateTransition rotateTransition = new RotateTransition(Duration.seconds(1), roll);
-	    rotateTransition.setByAngle(angulo * 100); 
-	    rotateTransition.setCycleCount(1);   
-	    rotateTransition.play();
-	    
-	    rotateTransition.setOnFinished(event -> {
-	    	double angleFinal = rotate.getAngle();
-	    	System.out.println("angle final: " + angleFinal);
-	    	
-	    	
-	    	
-	    	
+		rotateTransition.setByAngle(angulo);
+		rotateTransition.setCycleCount(1);
+		rotateTransition.play();
+
+		rotateTransition.setOnFinished(event -> {
+			System.out.println("angle rotransi: " + rotateTransition.getByAngle());
+			System.out.println(roll.getRotate());
 			
-	    });
-	    
-	    
+
+			if (roll.getRotate() > 0 && roll.getRotate() < 7) {
+				// wallpaper secret
+
+				resultRoll.setText("Parabens \n Você ganhou: Wallpaper");
+			} else if (roll.getRotate() > 6 && roll.getRotate() < 13) {
+				// skin secret
+				
+				resultRoll.setText("Parabens \n Você ganhou: Skin secret");
+			} else if (roll.getRotate() > 12 && roll.getRotate() < 71) {
+				addCoins(100);
+				resultRoll.setText("Parabens \n Você ganhou: coins");
+			} else if (roll.getRotate() > 70 && roll.getRotate() < 129) {
+				resultRoll.setText("Parabens \n Você ganhou: nada kkkk");
+			} else if (roll.getRotate() > 128 && roll.getRotate() < 187) {
+				resultRoll.setText("Parabens \n Você ganhou: 10x coin");
+				multiCoins = multiCoins * 10;
+			} else if (roll.getRotate() > 186 && roll.getRotate() < 246) {
+				resultRoll.setText("Parabens \n Você ganhou: 5x power");
+				clickPower = clickPower * 5;
+			} else if (roll.getRotate() > 247 && roll.getRotate() < 304) {
+				// Turbo
+				resultRoll.setText("Parabens \n Você ganhou: Velocidade Turbo");
+			} else if (roll.getRotate() > 303 && roll.getRotate() < 361) {
+				// +1 auto
+				if(autoClickers == 0) {
+					ct.autoClicker.setVisible(true);
+				}
+				autoClickers++;
+				resultRoll.setText("Parabens \n Você ganhou: +1 autoclick");
+			}
+
+			
+			
+			Timeline ti = new Timeline(new KeyFrame(Duration.seconds(5), evs -> {
+				ct.powers.setVisible(false);
+				ct.paneRoll.setVisible(false);
+				roll.setRotate(0);
+				
+				ct.match.setDisable(false);
+				ct.match.setOpacity(1);
+				ct.pBar.setProgress(0);
+				currentScore = 0;
+			}));
+
+			ti.play();
+			
+			
+		});
+
+	}
+
+	private void addCoins(int amount) {
+		if (coins == 0) {
+			coins += amount;
+		} else {
+			coins += amount * multiCoins;
+		}
 	}
 
 }

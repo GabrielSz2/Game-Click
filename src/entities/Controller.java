@@ -31,8 +31,6 @@ public class Controller {
 	@FXML
 	protected Pane end;
 	
-	@FXML
-	protected Button play;
 	
 	@FXML
 	protected ImageView farm;
@@ -50,10 +48,16 @@ public class Controller {
 	protected ImageView roulette;
 	
 	@FXML
+	protected ImageView autoClicker;
+	
+	@FXML
 	protected ProgressBar pBar;
 	
 	@FXML
 	protected Button btRoll;
+	
+	@FXML
+	protected Button play;
 	
 	@FXML
 	public void initialize() {
@@ -63,6 +67,7 @@ public class Controller {
 		powers.setVisible(false);
 		paneRoll.setVisible(false);
 		end.setVisible(false);
+		autoClicker.setVisible(false);
 		
 		game.runGame();
 		
