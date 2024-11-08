@@ -48,6 +48,10 @@ public class Game {
 	private Double xp = 0.0;
 	private Integer timeRest = 3;
 	private Integer level = 1;
+	
+	private boolean isRunning = false;
+    private AnimationTimer gameLoop;
+	
 
 	Random rd = new Random();
 	private List<Text> rain = new ArrayList<>();
@@ -90,6 +94,7 @@ public class Game {
 			go.play();
 			ct.match.getChildren().add(clock);
 
+			
 		});
 	}
 
@@ -147,7 +152,9 @@ public class Game {
 		timer.start();
 		animationFarmClick(ct.match);
 
-		
+		if(ct.autoClicker.getFitHeight() == 65) {
+			animationFarmClick(ct.match);
+		}
 		
 		xp = ct.pBar.getProgress();
 		xp += (double) (1.0 / futureMeta);
@@ -171,7 +178,7 @@ public class Game {
 		ct.match.setOpacity(0.3);
 		level++;
 		futureMeta = (int) ((int) futureMeta * 1.5);
-
+		
 		// implementar um botão para setVisible do powers
 		ready.setLayoutX(230);
 		ready.setLayoutY(300);
@@ -294,15 +301,16 @@ public class Game {
 		roll.getTransforms().add(rotate);
 
 		RotateTransition rotateTransition = new RotateTransition(Duration.seconds(1), roll);
-		rotateTransition.setByAngle(angulo);
+		rotateTransition.setByAngle(angulo * 100);
 		rotateTransition.setCycleCount(1);
 		rotateTransition.play();
 
 		rotateTransition.setOnFinished(event -> {
+			roll.setRotate(roll.getRotate() / 100);
+			
 			System.out.println("angle rotransi: " + rotateTransition.getByAngle());
 			System.out.println(roll.getRotate());
 			
-
 			if (roll.getRotate() > 0 && roll.getRotate() < 7) {
 				// wallpaper secret
 
@@ -361,5 +369,8 @@ public class Game {
 			coins += amount * multiCoins;
 		}
 	}
+	
+	 
+	
 
 }
