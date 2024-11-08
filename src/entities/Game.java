@@ -35,23 +35,35 @@ public class Game {
 	private Label choosePower = createLabel(150, 250, 28, "Escolha sua recompensa!");
 	private Label gainCoin = createLabel(230, 380, 16);
 	private Label resultRoll = createLabel(216, 12, 18);
-	
+
 	private Button ready = new Button();
+	private Button stats = new Button();
 
 	private Integer autoClickers = 0;
 	private Integer multiCoins = 1;
 	private Integer coins = 0;
-	private Integer end = 100;
+	private Integer end = 5;
 	private Integer currentScore = 0;
 	private Integer futureMeta = 10;
 	private double clickPower = 1.0;
 	private Double xp = 0.0;
 	private Integer timeRest = 3;
 	private Integer level = 1;
-	
+
+	private boolean panePower = false;
+	private boolean repsAuto = false;
 	private boolean isRunning = false;
-    private AnimationTimer gameLoop;
-	
+	private AnimationTimer gameLoop;
+	private long lastUpdate = 0;
+
+	AnimationTimer UP = new AnimationTimer() {
+		@Override
+		public void handle(long now) {
+			plusUp(ct.match);
+		}
+	};
+
+	int p0 = 0;
 
 	Random rd = new Random();
 	private List<Text> rain = new ArrayList<>();
@@ -61,13 +73,34 @@ public class Game {
 	}
 
 	public void runGame() {
-		startGame();
 		loading();
-		match();
+		startMatch();
+
 	}
 
 	private void variableStarter() {
 		ct.farm.setVisible(false);
+		choosePower.setVisible(false);
+		ready.setVisible(false);
+		ct.autoClicker.setVisible(false);
+
+		porcentageBar.setText(xp + "%");
+		ready.setLayoutX(230);
+		ready.setLayoutY(300);
+		ready.setText("Escolher");
+		ready.setStyle("-fx-font-size: " + 28 + "px;");
+
+		stats.setLayoutX(492);
+		stats.setLayoutY(162);
+		stats.setText("Stats");
+		stats.setStyle("-fx-background-color: white; " + "-fx-font-family: 'Serif'; " + "-fx-font-size: 18px; "
+				+ "-fx-text-fill: black;");
+
+		ct.pane.getChildren().add(ready);
+		ct.pane.getChildren().add(choosePower);
+		ct.match.getChildren().addAll(plus, showCoins, sts, ckPower, porcentageBar, showLevel, meta, stats);
+		ct.powers.getChildren().add(gainCoin);
+		ct.paneRoll.getChildren().add(resultRoll);
 	}
 
 	private void loading() {
@@ -80,12 +113,13 @@ public class Game {
 		ti.play();
 	}
 
-	private void startGame() {
+	private void startMatch() {
 
 		ct.play.setOnMouseClicked(e -> {
 
 			ct.startG.setVisible(false);
 			ct.match.setVisible(true);
+			match();
 
 			// coloquei 0 para desenvolver o match, assim que terminar, favor colocar 1;
 			Timeline go = new Timeline(new KeyFrame(Duration.seconds(0.1), ev -> updateClock()));
@@ -94,7 +128,6 @@ public class Game {
 			go.play();
 			ct.match.getChildren().add(clock);
 
-			
 		});
 	}
 
@@ -112,82 +145,83 @@ public class Game {
 	}
 
 	private void match() {
-		ct.pane.getChildren().add(ready);
-		ct.pane.getChildren().add(choosePower);
-		choosePower.setVisible(false);
-		ready.setVisible(false);
+		initGameLoop();
 
-		porcentageBar.setText(xp + "%");
-		ct.match.getChildren().addAll(plus, showCoins, sts, ckPower, porcentageBar, showLevel, meta);
-		ct.powers.getChildren().add(gainCoin);
-		ct.paneRoll.getChildren().add(resultRoll);
-		ckPower.setText("Click power: +" + ((int) clickPower));
-		meta.setText("" + futureMeta);
-		showCoins.setText("Coins: " + coins + "\nCoin multiplier: " + multiCoins + "x");
-
-		AnimationTimer timer = new AnimationTimer() {
-			@Override
-			public void handle(long now) {
-				rainDown(ct.match);
-			}
-		};
-
-		ct.farm.setOnMouseClicked(e -> handleFarmClick(timer, e));
+		toggleGameLoop();
 
 	}
 
-	private void handleFarmClick(AnimationTimer timer, MouseEvent e) {
+	private void startGame() {
+
 		currentScore++;
-		meta.setText("" + (int) (futureMeta * clickPower));
 		ckPower.setText("Click power: +" + ((int) clickPower));
-		showLevel.setText("Level: " + level);
+		meta.setText("" + (int) (futureMeta * clickPower));
 		showCoins.setText("Coins: " + coins + "\nCoin multiplier: " + multiCoins + "x");
+		showLevel.setText("Level: " + level);
 		gainCoin.setStyle("-fx-background-color: black; " + "-fx-font-family: 'Sitka Test'; " + "-fx-font-size: 16px; "
 				+ "-fx-text-fill: white;");
 		resultRoll.setStyle("-fx-background-color: white; " + "-fx-font-family: 'Serif'; " + "-fx-font-size: 18px; "
 				+ "-fx-text-fill: black;");
-
-		double x = ct.farm.getLocalToParentTransform().getTx() + e.getX();
-		createPlus(ct.match, x);
-		timer.start();
-		animationFarmClick(ct.match);
-
-		if(ct.autoClicker.getFitHeight() == 65) {
-			animationFarmClick(ct.match);
-		}
-		
-		xp = ct.pBar.getProgress();
-		xp += (double) (1.0 / futureMeta);
-		ct.pBar.setProgress(xp);
-		porcentageBar.setText((String.format("%.0f", xp * 100)) + "%");
-
-		if (ct.pBar.getProgress() > 0.99) {
-			panePower();
-			System.out.println("pane power nivel " + level);
-		}
 
 		if (level == end) {
 			endGame();
 			System.out.println("end game");
 		}
 
+		
+		if (ct.autoClicker.isVisible()) {
+			if (ct.autoClicker.getFitHeight() == 65) {
+				if (repsAuto) {
+					xp = ct.pBar.getProgress();
+					xp += (double) (1.0 / futureMeta);
+					ct.pBar.setProgress(xp);
+					porcentageBar.setText((String.format("%.0f", xp * 100)) + "%");
+					repsAuto = false;
+				}
+			}
+		}
+		
+
+		if (panePower == false) {
+			if (ct.pBar.getProgress() > 0.99) {
+				panePower();
+				panePower = true;
+				if(repsAuto) {repsAuto = false;}
+				ct.pBar.setProgress(0);
+			}
+		}
+
+		ct.farm.setOnMouseClicked(e -> handleFarmClick(UP, e));
+
+	}
+
+	private void handleFarmClick(AnimationTimer timer, MouseEvent e) {
+
+		// metodos do click
+		double x = ct.farm.getLocalToParentTransform().getTx() + e.getX();
+		createPlus(ct.match, x);
+		timer.start();
+		animationFarmClick(ct.match);
+
+		xp = ct.pBar.getProgress();
+		xp += (double) (1.0 / futureMeta);
+		ct.pBar.setProgress(xp);
+		porcentageBar.setText((String.format("%.0f", xp * 100)) + "%");
+
 	}
 
 	private void panePower() {
 		ct.match.setDisable(true);
 		ct.match.setOpacity(0.3);
-		level++;
-		futureMeta = (int) ((int) futureMeta * 1.5);
-		
-		// implementar um botão para setVisible do powers
-		ready.setLayoutX(230);
-		ready.setLayoutY(300);
-		ready.setText("Escolher");
-		ready.setStyle("-fx-font-size: " + 28 + "px;");
+
 		ready.setVisible(true);
 		choosePower.setVisible(true);
 
 		ready.setOnMouseClicked(evnt -> {
+			System.out.println("pane power nivel " + level);
+			level++;
+			futureMeta = (int) ((int) futureMeta * clickPower);
+
 			addCoins(1);
 			gainCoin.setText("Você ganhou " + 1 * multiCoins + " coins");
 			ready.setVisible(false);
@@ -220,11 +254,11 @@ public class Game {
 				ct.powers.setVisible(false);
 				ct.paneRoll.setVisible(true);
 				ct.btRoll.setDisable(false);
-				
+
 				ct.btRoll.setOnMouseClicked(ev -> {
 					Random xyz = new Random();
 					int numberForRoll = xyz.nextInt(361);
-					roll(ct.roulette, numberForRoll);
+					roll(ct.roulette, 350);
 					ct.btRoll.setDisable(true);
 				});
 
@@ -235,6 +269,8 @@ public class Game {
 
 	private void endGame() {
 		ct.match.setVisible(false);
+		// metodo para stopar a gameplay
+		toggleGameLoop();
 		ct.end.setVisible(true);
 	}
 
@@ -250,7 +286,7 @@ public class Game {
 		pane.getChildren().add(more);
 	}
 
-	private void rainDown(Pane pane) {
+	private void plusUp(Pane pane) {
 		List<Text> itemsToRemove = new ArrayList<>();
 
 		for (Text text : rain) {
@@ -267,18 +303,18 @@ public class Game {
 
 	private void animationFarmClick(Pane pane) {
 		Timeline tm = new Timeline(new KeyFrame(Duration.seconds(0.1), ev -> {
-			animationFarm(200, 188, 206, 106);
+			animationFarm(200, 188, 206, 106, ct.farm);
 		}));
-		animationFarm(165, 170, 218, 118);
+		animationFarm(165, 170, 218, 118, ct.farm);
 
 		tm.play();
 	}
 
-	private void animationFarm(int fitW, int fitH, int x, int y) {
-		ct.farm.setFitWidth(fitW);
-		ct.farm.setFitHeight(fitH);
-		ct.farm.setLayoutX(x);
-		ct.farm.setLayoutY(y);
+	private void animationFarm(int fitW, int fitH, int x, int y, ImageView farm) {
+		farm.setFitWidth(fitW);
+		farm.setFitHeight(fitH);
+		farm.setLayoutX(x);
+		farm.setLayoutY(y);
 	}
 
 	private Label createLabel(double x, double y, int fontSize) {
@@ -307,17 +343,17 @@ public class Game {
 
 		rotateTransition.setOnFinished(event -> {
 			roll.setRotate(roll.getRotate() / 100);
-			
+
 			System.out.println("angle rotransi: " + rotateTransition.getByAngle());
 			System.out.println(roll.getRotate());
-			
+
 			if (roll.getRotate() > 0 && roll.getRotate() < 7) {
 				// wallpaper secret
 
 				resultRoll.setText("Parabens \n Você ganhou: Wallpaper");
 			} else if (roll.getRotate() > 6 && roll.getRotate() < 13) {
 				// skin secret
-				
+
 				resultRoll.setText("Parabens \n Você ganhou: Skin secret");
 			} else if (roll.getRotate() > 12 && roll.getRotate() < 71) {
 				addCoins(100);
@@ -335,29 +371,27 @@ public class Game {
 				resultRoll.setText("Parabens \n Você ganhou: Velocidade Turbo");
 			} else if (roll.getRotate() > 303 && roll.getRotate() < 361) {
 				// +1 auto
-				if(autoClickers == 0) {
+				if (autoClickers == 0) {
 					ct.autoClicker.setVisible(true);
 				}
 				autoClickers++;
 				resultRoll.setText("Parabens \n Você ganhou: +1 autoclick");
 			}
 
-			
-			
 			Timeline ti = new Timeline(new KeyFrame(Duration.seconds(5), evs -> {
 				ct.powers.setVisible(false);
 				ct.paneRoll.setVisible(false);
 				roll.setRotate(0);
-				
+
 				ct.match.setDisable(false);
 				ct.match.setOpacity(1);
 				ct.pBar.setProgress(0);
-				currentScore = 0;
+				
+				panePower = false;
 			}));
 
 			ti.play();
-			
-			
+
 		});
 
 	}
@@ -369,8 +403,45 @@ public class Game {
 			coins += amount * multiCoins;
 		}
 	}
-	
-	 
-	
+
+	private void animationAutoClick() {
+		Timeline tm = new Timeline(new KeyFrame(Duration.seconds(0.1), ev -> {
+			animationFarm(79, 70, 312, 201, ct.autoClicker);
+		}));
+
+		animationFarm(79, 65, 312, 201, ct.autoClicker);
+		tm.play();
+	}
+
+	private void initGameLoop() {
+		gameLoop = new AnimationTimer() {
+			@Override
+			public void handle(long now) {
+				startGame();
+
+				if (now - lastUpdate >= 1_000_000_000) { // 1 bilhão de nanossegundos = 1 segundo
+					animationAutoClick();
+					if (!ct.match.isDisable()) {
+						if (!repsAuto) {
+							repsAuto = true;
+						}
+					}
+					lastUpdate = now; // Atualiza o tempo da última execução
+				}
+			}
+		};
+	}
+
+	// Método que liga ou desliga o game loop
+	private void toggleGameLoop() {
+		if (isRunning) {
+			gameLoop.stop();
+			System.out.println("Jogo pausado");
+		} else {
+			gameLoop.start();
+			System.out.println("Jogo iniciado");
+		}
+		isRunning = !isRunning; // Alterna o estado
+	}
 
 }
