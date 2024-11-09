@@ -42,7 +42,7 @@ public class Game {
 	private Integer autoClickers = 0;
 	private Integer multiCoins = 1;
 	private Integer coins = 0;
-	private Integer end = 5;
+	private Integer end = 50;
 	private Integer currentScore = 0;
 	private Integer futureMeta = 10;
 	private double clickPower = 1.0;
@@ -53,10 +53,11 @@ public class Game {
 	private boolean panePower = false;
 	private boolean repsAuto = false;
 	private boolean isRunning = false;
-	private AnimationTimer gameLoop;
 	private long lastUpdate = 0;
+	private long veloTurbo = 1_000_000_000L;
 
-	AnimationTimer UP = new AnimationTimer() {
+	private AnimationTimer gameLoop;
+	private AnimationTimer UP = new AnimationTimer() {
 		@Override
 		public void handle(long now) {
 			plusUp(ct.match);
@@ -173,7 +174,7 @@ public class Game {
 			if (ct.autoClicker.getFitHeight() == 65) {
 				if (repsAuto) {
 					xp = ct.pBar.getProgress();
-					xp += (double) (1.0 / futureMeta);
+					xp += (double) ((1.0 / futureMeta + clickPower / 100000) * autoClickers * 2);
 					ct.pBar.setProgress(xp);
 					porcentageBar.setText((String.format("%.0f", xp * 100)) + "%");
 					repsAuto = false;
@@ -190,7 +191,9 @@ public class Game {
 				ct.pBar.setProgress(0);
 			}
 		}
-
+		
+		ct.iconConfig.setOnMouseClicked(e -> pauseGame());
+		
 		ct.farm.setOnMouseClicked(e -> handleFarmClick(UP, e));
 
 	}
@@ -204,7 +207,7 @@ public class Game {
 		animationFarmClick(ct.match);
 
 		xp = ct.pBar.getProgress();
-		xp += (double) (1.0 / futureMeta);
+		xp += (double) (1.0 / futureMeta + clickPower / 100000);
 		ct.pBar.setProgress(xp);
 		porcentageBar.setText((String.format("%.0f", xp * 100)) + "%");
 
@@ -212,26 +215,29 @@ public class Game {
 
 	private void panePower() {
 		ct.match.setDisable(true);
-		ct.match.setOpacity(0.3);
-
+		ct.match.setOpacity(0.75);
+		ct.blackScreen.setVisible(true);
+		
 		ready.setVisible(true);
 		choosePower.setVisible(true);
 
 		ready.setOnMouseClicked(evnt -> {
 			System.out.println("pane power nivel " + level);
 			level++;
-			futureMeta = (int) ((int) futureMeta * clickPower);
+			futureMeta = (int) ((int) futureMeta * 1.5);
 
 			addCoins(1);
 			gainCoin.setText("Você ganhou " + 1 * multiCoins + " coins");
 			ready.setVisible(false);
 			choosePower.setVisible(false);
 			ct.powers.setVisible(true);
-
+			panePower = false;
+			
 			ct.x2Power.setOnMouseClicked(e -> {
 				clickPower = clickPower * 2;
 				ct.powers.setVisible(false);
 
+				ct.blackScreen.setVisible(false);
 				ct.match.setDisable(false);
 				ct.match.setOpacity(1);
 				ct.pBar.setProgress(0);
@@ -242,7 +248,8 @@ public class Game {
 				clickPower = (clickPower * 1.2);
 				multiCoins = multiCoins * 2;
 				ct.powers.setVisible(false);
-
+				
+				ct.blackScreen.setVisible(false);
 				ct.match.setDisable(false);
 				ct.match.setOpacity(1);
 				ct.pBar.setProgress(0);
@@ -254,22 +261,22 @@ public class Game {
 				ct.powers.setVisible(false);
 				ct.paneRoll.setVisible(true);
 				ct.btRoll.setDisable(false);
-
+				
 				ct.btRoll.setOnMouseClicked(ev -> {
 					Random xyz = new Random();
 					int numberForRoll = xyz.nextInt(361);
 					roll(ct.roulette, 350);
 					ct.btRoll.setDisable(true);
+					
 				});
 
-			});
+			});			
 		});
 
 	}
 
 	private void endGame() {
 		ct.match.setVisible(false);
-		// metodo para stopar a gameplay
 		toggleGameLoop();
 		ct.end.setVisible(true);
 	}
@@ -368,6 +375,7 @@ public class Game {
 				clickPower = clickPower * 5;
 			} else if (roll.getRotate() > 247 && roll.getRotate() < 304) {
 				// Turbo
+				veloTurbo =- 100_000_000L;
 				resultRoll.setText("Parabens \n Você ganhou: Velocidade Turbo");
 			} else if (roll.getRotate() > 303 && roll.getRotate() < 361) {
 				// +1 auto
@@ -378,7 +386,7 @@ public class Game {
 				resultRoll.setText("Parabens \n Você ganhou: +1 autoclick");
 			}
 
-			Timeline ti = new Timeline(new KeyFrame(Duration.seconds(5), evs -> {
+			Timeline ti = new Timeline(new KeyFrame(Duration.seconds(3), evs -> {
 				ct.powers.setVisible(false);
 				ct.paneRoll.setVisible(false);
 				roll.setRotate(0);
@@ -386,8 +394,7 @@ public class Game {
 				ct.match.setDisable(false);
 				ct.match.setOpacity(1);
 				ct.pBar.setProgress(0);
-				
-				panePower = false;
+				ct.blackScreen.setVisible(false);
 			}));
 
 			ti.play();
@@ -402,6 +409,34 @@ public class Game {
 		} else {
 			coins += amount * multiCoins;
 		}
+	}
+	
+	private void pauseGame() {
+		toggleGameLoop();
+		ct.blackScreen.setVisible(true);
+		ct.match.setDisable(true);
+		ct.match.setOpacity(0.75);
+		ct.configPause.setVisible(true);
+		ct.paneUtils.setVisible(true);
+		
+		ct.resume.setOnMouseClicked(e -> resumeGame());
+	}
+	
+	private void resumeGame() {
+		toggleGameLoop();
+		ct.blackScreen.setVisible(false);
+		ct.match.setDisable(false);
+		ct.match.setOpacity(1);
+		ct.configPause.setVisible(false);
+		ct.paneUtils.setVisible(false);
+	}
+	
+	private void changeWall() {
+		
+	}
+	
+	private void changeSkin() {
+		
 	}
 
 	private void animationAutoClick() {
@@ -419,20 +454,20 @@ public class Game {
 			public void handle(long now) {
 				startGame();
 
-				if (now - lastUpdate >= 1_000_000_000) { // 1 bilhão de nanossegundos = 1 segundo
+				if (now - lastUpdate >= veloTurbo) { 
 					animationAutoClick();
 					if (!ct.match.isDisable()) {
 						if (!repsAuto) {
 							repsAuto = true;
 						}
 					}
-					lastUpdate = now; // Atualiza o tempo da última execução
+					lastUpdate = now;
 				}
 			}
 		};
 	}
 
-	// Método que liga ou desliga o game loop
+	// Método que liga ou desliga o game 
 	private void toggleGameLoop() {
 		if (isRunning) {
 			gameLoop.stop();
@@ -441,7 +476,7 @@ public class Game {
 			gameLoop.start();
 			System.out.println("Jogo iniciado");
 		}
-		isRunning = !isRunning; // Alterna o estado
+		isRunning = !isRunning; 
 	}
 
 }

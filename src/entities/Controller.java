@@ -1,5 +1,7 @@
 package entities;
 
+import java.awt.Rectangle;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
@@ -23,6 +25,9 @@ public class Controller {
 	protected Pane match;
 	
 	@FXML
+	protected Pane paneUtils;
+	
+	@FXML
 	protected Pane powers;
 	
 	@FXML
@@ -31,6 +36,20 @@ public class Controller {
 	@FXML
 	protected Pane end;
 	
+	@FXML
+	protected ImageView iconConfig;
+	
+	@FXML
+	protected ImageView iconSkin;
+	
+	@FXML
+	protected ImageView iconWall;
+	
+	@FXML
+	protected ImageView wallpaper;
+	
+	@FXML
+	protected ImageView blackScreen;
 	
 	@FXML
 	protected ImageView farm;
@@ -51,6 +70,9 @@ public class Controller {
 	protected ImageView autoClicker;
 	
 	@FXML
+	protected ImageView configPause;
+	
+	@FXML
 	protected ProgressBar pBar;
 	
 	@FXML
@@ -60,15 +82,22 @@ public class Controller {
 	protected Button play;
 	
 	@FXML
+	protected Button resume;
+	
+	@FXML
 	public void initialize() {
 		loading.setVisible(true);
 		startG.setVisible(false);
 		match.setVisible(false);
-		powers.setVisible(false);
 		paneRoll.setVisible(false);
+		paneUtils.setVisible(false);
+		
+		configPause.setVisible(false);
+		powers.setVisible(false);
 		end.setVisible(false);
 		autoClicker.setVisible(false);
-		
+		blackScreen.setVisible(false);
+			
 		game.runGame();
 		
 	}
