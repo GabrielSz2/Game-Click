@@ -133,12 +133,65 @@
       </ImageView>
       <Pane fx:id="paneUtils" prefHeight="400.0" prefWidth="600.0">
          <children>
-            <ImageView fx:id="configPause" fitHeight="321.0" fitWidth="293.0" layoutX="167.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../imagens/Painel%20de%20config.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="resume" layoutX="235.0" layoutY="144.0" mnemonicParsing="false" opacity="0.0" prefHeight="56.0" prefWidth="124.0" text="Button" />
+            <Pane fx:id="configPause" prefHeight="400.0" prefWidth="600.0" visible="false">
+               <children>
+                  <Button fx:id="resume" layoutX="233.0" layoutY="141.0" mnemonicParsing="false" opacity="0.0" prefHeight="50.0" prefWidth="124.0" text="Button" />
+                  <ImageView fitHeight="321.0" fitWidth="293.0" layoutX="162.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagens/Painel%20de%20config.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane fx:id="configWall" prefHeight="400.0" prefWidth="600.0">
+               <children>
+                  <ImageView fitHeight="341.0" fitWidth="600.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagens/paneWall.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="wall1" disable="true" fitHeight="63.0" fitWidth="140.0" layoutX="14.0" layoutY="87.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagens/imagensWall/Wall%201.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="wallS2" disable="true" fitHeight="63.0" fitWidth="140.0" layoutX="241.0" layoutY="232.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagens/imagensWall/Wall%202.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="wall3" disable="true" fitHeight="63.0" fitWidth="140.0" layoutX="14.0" layoutY="252.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagens/imagensWall/Wall%203.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="wall2" disable="true" fitHeight="63.0" fitWidth="140.0" layoutX="14.0" layoutY="169.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagens/imagensWall/Wall%205.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="wall4" disable="true" fitHeight="63.0" fitWidth="140.0" layoutX="466.0" layoutY="88.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagens/imagensWall/Wall%204.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="wallS1" disable="true" fitHeight="63.0" fitWidth="140.0" layoutX="240.0" layoutY="134.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagens/imagensWall/Wall%206.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="wall5" disable="true" fitHeight="70.0" fitWidth="117.0" layoutX="466.0" layoutY="165.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagens/imagensWall/Wall%20inicial.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="wall6" disable="true" fitHeight="70.0" fitWidth="117.0" layoutX="466.0" layoutY="249.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagens/imagensWall/Wall%208.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
          </children>
       </Pane>
       <Pane fx:id="powers" prefHeight="400.0" prefWidth="600.0" visible="false">

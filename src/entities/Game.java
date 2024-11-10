@@ -8,9 +8,9 @@ import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.RotateTransition;
 import javafx.animation.Timeline;
-import javafx.animation.Transition;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -35,7 +35,8 @@ public class Game {
 	private Label choosePower = createLabel(150, 250, 28, "Escolha sua recompensa!");
 	private Label gainCoin = createLabel(230, 380, 16);
 	private Label resultRoll = createLabel(216, 12, 18);
-
+	private Label changeWall = createLabel(286, 360, 18);
+	
 	private Button ready = new Button();
 	private Button stats = new Button();
 
@@ -97,8 +98,7 @@ public class Game {
 		stats.setStyle("-fx-background-color: white; " + "-fx-font-family: 'Serif'; " + "-fx-font-size: 18px; "
 				+ "-fx-text-fill: black;");
 
-		ct.pane.getChildren().add(ready);
-		ct.pane.getChildren().add(choosePower);
+		ct.pane.getChildren().addAll(ready, changeWall, choosePower);
 		ct.match.getChildren().addAll(plus, showCoins, sts, ckPower, porcentageBar, showLevel, meta, stats);
 		ct.powers.getChildren().add(gainCoin);
 		ct.paneRoll.getChildren().add(resultRoll);
@@ -163,7 +163,9 @@ public class Game {
 				+ "-fx-text-fill: white;");
 		resultRoll.setStyle("-fx-background-color: white; " + "-fx-font-family: 'Serif'; " + "-fx-font-size: 18px; "
 				+ "-fx-text-fill: black;");
-
+		changeWall.setStyle("-fx-background-color: white; " + "-fx-font-family: 'Serif'; " + "-fx-font-size: 18px; "
+				+ "-fx-text-fill: black;");
+		
 		if (level == end) {
 			endGame();
 			System.out.println("end game");
@@ -193,7 +195,7 @@ public class Game {
 		}
 		
 		ct.iconConfig.setOnMouseClicked(e -> pauseGame());
-		
+		ct.iconWall.setOnMouseClicked(e -> changeWall());
 		ct.farm.setOnMouseClicked(e -> handleFarmClick(UP, e));
 
 	}
@@ -265,7 +267,7 @@ public class Game {
 				ct.btRoll.setOnMouseClicked(ev -> {
 					Random xyz = new Random();
 					int numberForRoll = xyz.nextInt(361);
-					roll(ct.roulette, 350);
+					roll(ct.roulette, numberForRoll);
 					ct.btRoll.setDisable(true);
 					
 				});
@@ -432,6 +434,32 @@ public class Game {
 	}
 	
 	private void changeWall() {
+		toggleGameLoop();
+		ct.blackScreen.setVisible(true);
+		ct.match.setDisable(true);
+		ct.match.setOpacity(0.75);
+		ct.paneUtils.setVisible(true);
+		ct.configWall.setVisible(true);
+		
+		
+		
+		ct.wall1.setOnMouseClicked(e -> {
+			System.out.println("wall1 clicado");
+			unlockWall();
+			ct.wallpaper.setImage(new Image(getClass()
+			.getResource("/imagens/imagensWall/Wall_1.jpg").toExternalForm()));});
+		
+		
+		
+	}
+	
+	private void unlockWall() {
+		if(ct.wall1.isDisable()) {
+			if(coins >= 0) {
+				ct.wall1.setOpacity(1);
+			}
+		}
+		
 		
 	}
 	

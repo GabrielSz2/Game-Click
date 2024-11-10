@@ -1,7 +1,5 @@
 package entities;
 
-import java.awt.Rectangle;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
@@ -26,6 +24,12 @@ public class Controller {
 	
 	@FXML
 	protected Pane paneUtils;
+	
+	@FXML
+	protected Pane configPause;
+	
+	@FXML
+	protected Pane configWall;
 	
 	@FXML
 	protected Pane powers;
@@ -70,7 +74,28 @@ public class Controller {
 	protected ImageView autoClicker;
 	
 	@FXML
-	protected ImageView configPause;
+	protected ImageView wall1;
+	
+	@FXML
+	protected ImageView wall2;
+	
+	@FXML
+	protected ImageView wall3;
+	
+	@FXML
+	protected ImageView wall4;
+	
+	@FXML
+	protected ImageView wall5;
+	
+	@FXML
+	protected ImageView wall6;
+	
+	@FXML
+	protected ImageView wallS1;
+	
+	@FXML
+	protected ImageView wallS2;
 	
 	@FXML
 	protected ProgressBar pBar;
@@ -93,6 +118,8 @@ public class Controller {
 		paneUtils.setVisible(false);
 		
 		configPause.setVisible(false);
+		configWall.setVisible(false);
+		
 		powers.setVisible(false);
 		end.setVisible(false);
 		autoClicker.setVisible(false);
