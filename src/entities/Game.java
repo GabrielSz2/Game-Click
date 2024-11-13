@@ -1,5 +1,6 @@
 package entities;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -40,6 +41,7 @@ public class Game {
 	private Button ready = new Button();
 	private Button stats = new Button();
 
+	private Integer WallSecret = 1;
 	private Integer autoClickers = 0;
 	private Integer multiCoins = 1;
 	private Integer coins = 0;
@@ -267,7 +269,7 @@ public class Game {
 				ct.btRoll.setOnMouseClicked(ev -> {
 					Random xyz = new Random();
 					int numberForRoll = xyz.nextInt(361);
-					roll(ct.roulette, numberForRoll);
+					roll(ct.roulette, numberForRoll); 
 					ct.btRoll.setDisable(true);
 					
 				});
@@ -357,8 +359,24 @@ public class Game {
 			System.out.println(roll.getRotate());
 
 			if (roll.getRotate() > 0 && roll.getRotate() < 7) {
-				// wallpaper secret
-
+				
+				switch (WallSecret) {
+				case 1: 
+				ct.wallS1.setOpacity(0);
+				WallSecret++;
+				break;
+				
+				case 2:
+				ct.wallS2.setOpacity(0);
+				WallSecret++;
+				break;
+				
+				case 3:
+				ct.wallS3.setOpacity(0);
+				WallSecret++;
+				break;
+				}
+				
 				resultRoll.setText("Parabens \n Você ganhou: Wallpaper");
 			} else if (roll.getRotate() > 6 && roll.getRotate() < 13) {
 				// skin secret
@@ -421,16 +439,16 @@ public class Game {
 		ct.configPause.setVisible(true);
 		ct.paneUtils.setVisible(true);
 		
-		ct.resume.setOnMouseClicked(e -> resumeGame());
+		ct.resume.setOnMouseClicked(e -> resumeGame(ct.configPause));
 	}
 	
-	private void resumeGame() {
+	private void resumeGame(Pane pane) {
 		toggleGameLoop();
 		ct.blackScreen.setVisible(false);
 		ct.match.setDisable(false);
 		ct.match.setOpacity(1);
-		ct.configPause.setVisible(false);
 		ct.paneUtils.setVisible(false);
+		pane.setVisible(false);
 	}
 	
 	private void changeWall() {
@@ -442,24 +460,124 @@ public class Game {
 		ct.configWall.setVisible(true);
 		
 		
+		ct.wall1.setOnMouseClicked(e -> unlockWall(0));
+		ct.wall2.setOnMouseClicked(e -> unlockWall(1));
+		ct.wall3.setOnMouseClicked(e -> unlockWall(2));
+		ct.wall4.setOnMouseClicked(e -> unlockWall(3));
+		ct.wall5.setOnMouseClicked(e -> unlockWall(4));
+		ct.wall6.setOnMouseClicked(e -> unlockWall(5));
+		ct.wallS1.setOnMouseClicked(e -> unlockWall(6));
+		ct.wallS2.setOnMouseClicked(e -> unlockWall(7));
+		ct.wallS3.setOnMouseClicked(e -> unlockWall(8));
 		
-		ct.wall1.setOnMouseClicked(e -> {
-			System.out.println("wall1 clicado");
-			unlockWall();
-			ct.wallpaper.setImage(new Image(getClass()
-			.getResource("/imagens/imagensWall/Wall_1.jpg").toExternalForm()));});
-		
-		
-		
+			
+		ct.readyWall.setOnMouseClicked(ep -> resumeGame(ct.configWall));
 	}
 	
-	private void unlockWall() {
-		if(ct.wall1.isDisable()) {
-			if(coins >= 0) {
-				ct.wall1.setOpacity(1);
+	private void unlockWall(Integer wall) {			
+			switch(wall){
+			case 0:
+				if(ct.wall1.getOpacity() == 1) {
+					if(coins >= 100) {
+						ct.wall1.setOpacity(0);
+						coins = coins - 100;
+					}
+				}
+				else if(ct.wall1.getOpacity() == 0) {
+					ct.wallpaper.setImage(new Image(getClass()
+					.getClassLoader().getResource("\\imagens\\imagensWall\\wall1.jpg").toExternalForm()));	
+				}
+				
+				break;
+				
+			case 1:
+				if(ct.wall2.getOpacity() == 1) {
+					if(coins >= 1000) {
+						ct.wall2.setOpacity(0);
+						coins = coins - 1000;
+					}
+				}
+				else if(ct.wall2.getOpacity() == 0 ) {
+					ct.wallpaper.setImage(new Image(getClass()
+					.getClassLoader().getResource("\\imagens\\imagensWall\\wall2.jpg").toExternalForm()));	
+				}
+				
+				break;
+				
+			case 2:
+				if(ct.wall3.getOpacity() == 1) {
+					if(coins >= 4000) {
+						ct.wall3.setOpacity(0);
+						coins = coins - 4000;
+					}
+				}
+				else if(ct.wall3.getOpacity() == 0) {
+					ct.wallpaper.setImage(new Image(getClass()
+					.getClassLoader().getResource("\\imagens\\imagensWall\\wall3.jpg").toExternalForm()));	
+				}
+				
+				break;
+				
+			case 3:
+				if(ct.wall4.getOpacity() == 1) {
+					if(coins >= 7000) {
+						ct.wall4.setOpacity(0);
+						coins = coins - 7000;
+					}
+				}
+				else if(ct.wall4.getOpacity() == 0) {
+					ct.wallpaper.setImage(new Image(getClass()
+					.getClassLoader().getResource("\\imagens\\imagensWall\\wall4.jpg").toExternalForm()));	
+				}
+				
+				break;
+				
+			case 4:
+				if(ct.wall5.getOpacity() == 0) {
+					ct.wallpaper.setImage(new Image(getClass()
+					.getClassLoader().getResource("\\imagens\\imagensWall\\Wall5.jpg").toExternalForm()));	
+				}
+				
+				break;
+				
+			case 5:
+				if(ct.wall6.getOpacity() == 1) {
+					if(coins >= 10000) {
+						ct.wall6.setOpacity(0);
+						coins = coins - 10000;
+					}
+				}
+				else if(ct.wall6.getOpacity() == 0) {
+					ct.wallpaper.setImage(new Image(getClass()
+					.getClassLoader().getResource("\\imagens\\imagensWall\\Wall6.jpg").toExternalForm()));	
+				}
+				
+				break;
+			
+			case 6:
+				if(ct.wallS1.getOpacity() == 0) {
+					ct.wallpaper.setImage(new Image(getClass()
+					.getClassLoader().getResource("\\imagens\\imagensWall\\wallS1.jpg").toExternalForm()));	
+				}
+				
+				break;
+				
+			case 7:
+				if(ct.wallS2.getOpacity() == 0) {
+					ct.wallpaper.setImage(new Image(getClass()
+					.getClassLoader().getResource("\\imagens\\imagensWall\\WallS2.jpg").toExternalForm()));	
+				}
+				
+				break;
+				
+			case 8:
+				if(ct.wallS3.getOpacity() == 0) {
+					ct.wallpaper.setImage(new Image(getClass()
+					.getClassLoader().getResource("\\imagens\\imagensWall\\wallS3.jpg").toExternalForm()));	
+				}
+				
+				break;
 			}
-		}
-		
 		
 	}
 	
@@ -495,7 +613,6 @@ public class Game {
 		};
 	}
 
-	// Método que liga ou desliga o game 
 	private void toggleGameLoop() {
 		if (isRunning) {
 			gameLoop.stop();

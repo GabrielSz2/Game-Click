@@ -2,9 +2,11 @@ package entities;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 
 public class Controller {
 	
@@ -74,28 +76,31 @@ public class Controller {
 	protected ImageView autoClicker;
 	
 	@FXML
-	protected ImageView wall1;
+	protected Label wall1;
 	
 	@FXML
-	protected ImageView wall2;
+	protected Label wall2;
 	
 	@FXML
-	protected ImageView wall3;
+	protected Label wall3;
 	
 	@FXML
-	protected ImageView wall4;
+	protected Label wall4;
 	
 	@FXML
-	protected ImageView wall5;
+	protected Label wall5;
 	
 	@FXML
-	protected ImageView wall6;
+	protected Label wall6;
 	
 	@FXML
-	protected ImageView wallS1;
+	protected Label wallS1;
 	
 	@FXML
-	protected ImageView wallS2;
+	protected Label wallS2;
+	
+	@FXML
+	protected Label wallS3;
 	
 	@FXML
 	protected ProgressBar pBar;
@@ -107,7 +112,10 @@ public class Controller {
 	protected Button play;
 	
 	@FXML
-	protected Button resume;
+	protected Button readyWall;
+	
+	@FXML
+	protected Rectangle resume;
 	
 	@FXML
 	public void initialize() {
