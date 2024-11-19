@@ -7,6 +7,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 
 public class Controller {
 	
@@ -31,7 +32,13 @@ public class Controller {
 	protected Pane configPause;
 	
 	@FXML
+	protected Pane configSkin;
+	
+	@FXML
 	protected Pane configWall;
+	
+	@FXML
+	protected Pane configStatus;
 	
 	@FXML
 	protected Pane powers;
@@ -76,6 +83,21 @@ public class Controller {
 	protected ImageView autoClicker;
 	
 	@FXML
+	protected Button readyStatus;
+	
+	@FXML
+	protected Text sPower;
+	
+	@FXML
+	protected Text sMultiCoins;
+	
+	@FXML
+	protected Text sAuto;
+	
+	@FXML
+	protected Text sVelo;
+	
+	@FXML
 	protected Label wall1;
 	
 	@FXML
@@ -101,7 +123,34 @@ public class Controller {
 	
 	@FXML
 	protected Label wallS3;
+
+	@FXML
+	protected Label skin1;
 	
+	@FXML
+	protected Label skin2;
+	
+	@FXML
+	protected Label skin3;
+	
+	@FXML
+	protected Label skin4;
+	
+	@FXML
+	protected Label skin5;
+	
+	@FXML
+	protected Label skin6;
+	
+	@FXML
+	protected Label skinS1;
+	
+	@FXML
+	protected Label skinS2;
+	
+	@FXML
+	protected Label skinS3;
+		
 	@FXML
 	protected ProgressBar pBar;
 	
@@ -113,6 +162,9 @@ public class Controller {
 	
 	@FXML
 	protected Button readyWall;
+	
+	@FXML
+	protected Button readySkin;
 	
 	@FXML
 	protected Rectangle resume;
@@ -127,6 +179,8 @@ public class Controller {
 		
 		configPause.setVisible(false);
 		configWall.setVisible(false);
+		configSkin.setVisible(false);
+		configStatus.setVisible(false);
 		
 		powers.setVisible(false);
 		end.setVisible(false);

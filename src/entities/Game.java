@@ -1,6 +1,5 @@
 package entities;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -41,6 +40,7 @@ public class Game {
 	private Button ready = new Button();
 	private Button stats = new Button();
 
+	private Integer skinSecret = 1;
 	private Integer WallSecret = 1;
 	private Integer autoClickers = 0;
 	private Integer multiCoins = 1;
@@ -72,6 +72,9 @@ public class Game {
 	Random rd = new Random();
 	private List<Text> rain = new ArrayList<>();
 
+	public Game() {
+	}
+	
 	public Game(Controller ct) {
 		this.ct = ct;
 	}
@@ -110,9 +113,8 @@ public class Game {
 
 		variableStarter();
 
-		// coloquei 1 seg para desenvolver o match, assim que terminar, favor colocar 3;
-		Timeline ti = new Timeline(new KeyFrame(Duration.seconds(0.1), e -> ct.loading.setVisible(false)),
-				new KeyFrame(Duration.seconds(0.1), e -> ct.startG.setVisible(true)));
+		Timeline ti = new Timeline(new KeyFrame(Duration.seconds(3), e -> ct.loading.setVisible(false)),
+				new KeyFrame(Duration.seconds(3), e -> ct.startG.setVisible(true)));
 		ti.play();
 	}
 
@@ -124,8 +126,7 @@ public class Game {
 			ct.match.setVisible(true);
 			match();
 
-			// coloquei 0 para desenvolver o match, assim que terminar, favor colocar 1;
-			Timeline go = new Timeline(new KeyFrame(Duration.seconds(0.1), ev -> updateClock()));
+			Timeline go = new Timeline(new KeyFrame(Duration.seconds(1), ev -> updateClock()));
 
 			go.setCycleCount(Timeline.INDEFINITE);
 			go.play();
@@ -151,15 +152,14 @@ public class Game {
 		initGameLoop();
 
 		toggleGameLoop();
-
 	}
 
 	private void startGame() {
 
 		currentScore++;
-		ckPower.setText("Click power: +" + ((int) clickPower));
+		ckPower.setText("Power: +" + ((int) clickPower));
 		meta.setText("" + (int) (futureMeta * clickPower));
-		showCoins.setText("Coins: " + coins + "\nCoin multiplier: " + multiCoins + "x");
+		showCoins.setText("Coins: " + coins + "\nCoin multi: " + multiCoins + "x");
 		showLevel.setText("Level: " + level);
 		gainCoin.setStyle("-fx-background-color: black; " + "-fx-font-family: 'Sitka Test'; " + "-fx-font-size: 16px; "
 				+ "-fx-text-fill: white;");
@@ -198,13 +198,14 @@ public class Game {
 		
 		ct.iconConfig.setOnMouseClicked(e -> pauseGame());
 		ct.iconWall.setOnMouseClicked(e -> changeWall());
+		ct.iconSkin.setOnMouseClicked(e -> changeSkin());
 		ct.farm.setOnMouseClicked(e -> handleFarmClick(UP, e));
-
+		stats.setOnMouseClicked(e -> showStatus());
+		
 	}
 
 	private void handleFarmClick(AnimationTimer timer, MouseEvent e) {
 
-		// metodos do click
 		double x = ct.farm.getLocalToParentTransform().getTx() + e.getX();
 		createPlus(ct.match, x);
 		timer.start();
@@ -228,8 +229,9 @@ public class Game {
 		ready.setOnMouseClicked(evnt -> {
 			System.out.println("pane power nivel " + level);
 			level++;
-			futureMeta = (int) ((int) futureMeta * 1.5);
-
+			futureMeta = (int) ((int) futureMeta * 1.75);
+			if(clickPower * 10000000 < futureMeta) {futureMeta = (int) ((int) futureMeta * 1.75);}
+			
 			addCoins(1);
 			gainCoin.setText("Você ganhou " + 1 * multiCoins + " coins");
 			ready.setVisible(false);
@@ -380,7 +382,23 @@ public class Game {
 				resultRoll.setText("Parabens \n Você ganhou: Wallpaper");
 			} else if (roll.getRotate() > 6 && roll.getRotate() < 13) {
 				// skin secret
-
+				switch (skinSecret) {
+				case 1: 
+				ct.skinS1.setOpacity(0);
+				skinSecret++;
+				break;
+				
+				case 2:
+				ct.skinS2.setOpacity(0);
+				skinSecret++;
+				break;
+				
+				case 3:
+				ct.skinS3.setOpacity(0);
+				skinSecret++;
+				break;
+				}
+				
 				resultRoll.setText("Parabens \n Você ganhou: Skin secret");
 			} else if (roll.getRotate() > 12 && roll.getRotate() < 71) {
 				addCoins(100);
@@ -394,11 +412,9 @@ public class Game {
 				resultRoll.setText("Parabens \n Você ganhou: 5x power");
 				clickPower = clickPower * 5;
 			} else if (roll.getRotate() > 247 && roll.getRotate() < 304) {
-				// Turbo
 				veloTurbo =- 100_000_000L;
 				resultRoll.setText("Parabens \n Você ganhou: Velocidade Turbo");
 			} else if (roll.getRotate() > 303 && roll.getRotate() < 361) {
-				// +1 auto
 				if (autoClickers == 0) {
 					ct.autoClicker.setVisible(true);
 				}
@@ -451,6 +467,21 @@ public class Game {
 		pane.setVisible(false);
 	}
 	
+	private void showStatus() {
+		toggleGameLoop();
+		ct.blackScreen.setVisible(true);
+		ct.match.setDisable(true);
+		ct.match.setOpacity(0.75);
+		ct.paneUtils.setVisible(true);
+		ct.configStatus.setVisible(true);		
+		ct.sAuto.setText("" + autoClickers);
+		ct.sPower.setText("" + (int)clickPower);
+		ct.sMultiCoins.setText("" + multiCoins);
+		ct.sVelo.setText("" + veloTurbo / 1000000000 + "s");
+		
+		ct.readyStatus.setOnMouseClicked(e -> resumeGame(ct.configStatus));
+	}
+	
 	private void changeWall() {
 		toggleGameLoop();
 		ct.blackScreen.setVisible(true);
@@ -478,9 +509,9 @@ public class Game {
 			switch(wall){
 			case 0:
 				if(ct.wall1.getOpacity() == 1) {
-					if(coins >= 100) {
+					if(coins >= 1000) {
 						ct.wall1.setOpacity(0);
-						coins = coins - 100;
+						coins = coins - 1000;
 					}
 				}
 				else if(ct.wall1.getOpacity() == 0) {
@@ -492,9 +523,9 @@ public class Game {
 				
 			case 1:
 				if(ct.wall2.getOpacity() == 1) {
-					if(coins >= 1000) {
+					if(coins >= 10000) {
 						ct.wall2.setOpacity(0);
-						coins = coins - 1000;
+						coins = coins - 10000;
 					}
 				}
 				else if(ct.wall2.getOpacity() == 0 ) {
@@ -506,9 +537,9 @@ public class Game {
 				
 			case 2:
 				if(ct.wall3.getOpacity() == 1) {
-					if(coins >= 4000) {
+					if(coins >= 50000) {
 						ct.wall3.setOpacity(0);
-						coins = coins - 4000;
+						coins = coins - 50000;
 					}
 				}
 				else if(ct.wall3.getOpacity() == 0) {
@@ -520,9 +551,9 @@ public class Game {
 				
 			case 3:
 				if(ct.wall4.getOpacity() == 1) {
-					if(coins >= 7000) {
+					if(coins >= 100000) {
 						ct.wall4.setOpacity(0);
-						coins = coins - 7000;
+						coins = coins - 100000;
 					}
 				}
 				else if(ct.wall4.getOpacity() == 0) {
@@ -542,9 +573,9 @@ public class Game {
 				
 			case 5:
 				if(ct.wall6.getOpacity() == 1) {
-					if(coins >= 10000) {
+					if(coins >= 1000000) {
 						ct.wall6.setOpacity(0);
-						coins = coins - 10000;
+						coins = coins - 1000000;
 					}
 				}
 				else if(ct.wall6.getOpacity() == 0) {
@@ -582,7 +613,132 @@ public class Game {
 	}
 	
 	private void changeSkin() {
+		toggleGameLoop();
+		ct.blackScreen.setVisible(true);
+		ct.match.setDisable(true);
+		ct.match.setOpacity(0.75);
+		ct.paneUtils.setVisible(true);
+		ct.configSkin.setVisible(true);
 		
+		
+		ct.skin1.setOnMouseClicked(e -> unlockSkin(0));
+		ct.skin2.setOnMouseClicked(e -> unlockSkin(1));
+		ct.skin3.setOnMouseClicked(e -> unlockSkin(2));
+		ct.skin4.setOnMouseClicked(e -> unlockSkin(3));
+		ct.skin5.setOnMouseClicked(e -> unlockSkin(4));
+		ct.skin6.setOnMouseClicked(e -> unlockSkin(5));
+		ct.skinS1.setOnMouseClicked(e -> unlockSkin(6));
+		ct.skinS2.setOnMouseClicked(e -> unlockSkin(7));
+		ct.skinS3.setOnMouseClicked(e -> unlockSkin(8));
+		
+			
+		ct.readySkin.setOnMouseClicked(ep -> resumeGame(ct.configSkin));
+	}
+	
+	private void unlockSkin(Integer skin) {
+		switch(skin){
+		case 0:
+			if(ct.skin1.getOpacity() == 1) {
+				if(coins >= 1000) {
+					ct.skin1.setOpacity(0);
+					coins = coins - 1000;
+				}
+			}
+			else if(ct.skin1.getOpacity() == 0) {
+				ct.farm.setImage(new Image(getClass()
+				.getClassLoader().getResource("\\imagens\\imagensFarm\\skin1.png").toExternalForm()));	
+			}
+			
+			break;
+			
+		case 1:
+			if(ct.skin2.getOpacity() == 1) {
+				if(coins >= 10000) {
+					ct.skin2.setOpacity(0);
+					coins = coins - 10000;
+				}
+			}
+			else if(ct.skin2.getOpacity() == 0 ) {
+				ct.farm.setImage(new Image(getClass()
+				.getClassLoader().getResource("\\imagens\\imagensFarm\\skin2.png").toExternalForm()));	
+			}
+			
+			break;
+			
+		case 2:
+			if(ct.skin3.getOpacity() == 1) {
+				if(coins >= 50000) {
+					ct.skin3.setOpacity(0);
+					coins = coins - 50000;
+				}
+			}
+			else if(ct.skin3.getOpacity() == 0) {
+				ct.farm.setImage(new Image(getClass()
+				.getClassLoader().getResource("\\imagens\\imagensFarm\\skin3.png").toExternalForm()));	
+			}
+			
+			break;
+			
+		case 3:
+			if(ct.skin4.getOpacity() == 1) {
+				if(coins >= 100000) {
+					ct.skin4.setOpacity(0);
+					coins = coins - 100000;
+				}
+			}
+			else if(ct.skin4.getOpacity() == 0) {
+				ct.farm.setImage(new Image(getClass()
+				.getClassLoader().getResource("\\imagens\\imagensFarm\\skin4.png").toExternalForm()));	
+			}
+			
+			break;
+			
+		case 4:
+			if(ct.skin5.getOpacity() == 0) {
+				ct.farm.setImage(new Image(getClass()
+				.getClassLoader().getResource("\\imagens\\imagensFarm\\skin5.png").toExternalForm()));	
+			}
+			
+			break;
+			
+		case 5:
+			if(ct.skin6.getOpacity() == 1) {
+				if(coins >= 1000000) {
+					ct.skin6.setOpacity(0);
+					coins = coins - 1000000;
+				}
+			}
+			else if(ct.skin6.getOpacity() == 0) {
+				ct.farm.setImage(new Image(getClass()
+				.getClassLoader().getResource("\\imagens\\imagensFarm\\skin6.png").toExternalForm()));	
+			}
+			
+			break;
+		
+		case 6:
+			if(ct.skinS1.getOpacity() == 0) {
+				ct.farm.setImage(new Image(getClass()
+				.getClassLoader().getResource("\\imagens\\imagensFarm\\skinS1.png").toExternalForm()));	
+			}
+			
+			break;
+			
+		case 7:
+			if(ct.skinS2.getOpacity() == 0) {
+				ct.farm.setImage(new Image(getClass()
+				.getClassLoader().getResource("\\imagens\\imagensFarm\\skinS3.png").toExternalForm()));	
+			}
+			
+			break;
+			
+		case 8:
+			if(ct.skinS3.getOpacity() == 0) {
+				ct.farm.setImage(new Image(getClass()
+				.getClassLoader().getResource("\\imagens\\imagensFarm\\skinS2.png").toExternalForm()));	
+			}
+			
+			break;
+		}
 	}
 
 	private void animationAutoClick() {

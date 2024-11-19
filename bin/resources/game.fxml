@@ -7,6 +7,9 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
@@ -97,7 +100,7 @@
             <Separator layoutX="504.0" layoutY="216.0" prefHeight="32.0" prefWidth="38.0" />
             <ImageView fx:id="farm" fitHeight="170.0" fitWidth="165.0" layoutX="218.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../imagens/imagensFarm/skin%203.png" />
+                  <Image url="@../imagens/imagensFarm/skin5.png" />
                </image>
             </ImageView>
             <Label layoutX="218.0" layoutY="47.0" text="goal:" textFill="WHITE">
@@ -144,7 +147,7 @@
                   <Rectangle fx:id="resume" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="45.0" layoutX="231.0" layoutY="139.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="124.0" />
                </children>
             </Pane>
-            <Pane fx:id="configWall" prefHeight="400.0" prefWidth="600.0">
+            <Pane fx:id="configWall" prefHeight="400.0" prefWidth="600.0" visible="false">
                <children>
                   <ImageView fitHeight="341.0" fitWidth="600.0" layoutY="32.0" preserveRatio="true">
                      <image>
@@ -206,7 +209,7 @@
                         <Font size="34.0" />
                      </font>
                   </Label>
-                  <Text layoutX="26.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="100 " />
+                  <Text layoutX="26.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1K" />
                   <ImageView fitHeight="16.0" fitWidth="17.0" layoutX="9.0" layoutY="151.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../imagens/coin.png" />
@@ -252,14 +255,14 @@
                         <Image url="@../imagens/coin.png" />
                      </image>
                   </ImageView>
-                  <Text layoutX="26.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1000 " />
-                  <Text layoutX="26.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4000" />
+                  <Text layoutX="26.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="10K" />
+                  <Text layoutX="26.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="50K" />
                   <Text layoutX="162.0" layoutY="299.0" strokeType="OUTSIDE" strokeWidth="0.0" text="???" />
                   <Text layoutX="481.0" layoutY="248.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gratis" />
                   <Text layoutX="254.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="???" />
                   <Text layoutX="330.0" layoutY="298.0" strokeType="OUTSIDE" strokeWidth="0.0" text="???" />
-                  <Text layoutX="481.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7000 " />
-                  <Text layoutX="481.0" layoutY="329.0" strokeType="OUTSIDE" strokeWidth="0.0" text="10000" />
+                  <Text layoutX="481.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="100K" />
+                  <Text layoutX="481.0" layoutY="329.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1M" />
                   <Label fx:id="wall3" layoutX="12.0" layoutY="252.0" prefHeight="63.0" prefWidth="117.0" style="-fx-background-color: #000000;" text="    ???" textFill="WHITE">
                      <font>
                         <Font size="34.0" />
@@ -305,6 +308,241 @@
                         <Font size="34.0" />
                      </font>
                   </Label>
+               </children>
+            </Pane>
+            <Pane fx:id="configSkin" prefHeight="400.0" prefWidth="600.0" visible="false">
+               <children>
+                  <ImageView fitHeight="341.0" fitWidth="600.0" layoutY="37.0" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagens/SkinPane.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="89.0" fitWidth="124.0" layoutX="17.0" layoutY="61.0" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagens/imagensFarm/skin1.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="82.0" fitWidth="108.0" layoutX="147.0" layoutY="195.0" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagens/imagensFarm/skinS3.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="76.0" fitWidth="88.0" layoutX="24.0" layoutY="247.0" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagens/imagensFarm/skin3.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="76.0" fitWidth="99.0" layoutX="24.0" layoutY="160.0" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagens/imagensFarm/skin2.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="63.0" fitWidth="140.0" layoutX="466.0" layoutY="84.0" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagens/imagensFarm/skin4.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="96.0" fitWidth="99.0" layoutX="247.0" layoutY="109.0" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagens/imagensFarm/skinS1.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="89.0" fitWidth="105.0" layoutX="467.0" layoutY="161.0" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagens/imagensFarm/skin5.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="89.0" fitWidth="124.0" layoutX="481.0" layoutY="241.0" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagens/imagensFarm/skin6.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="readySkin" layoutX="247.0" layoutY="346.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="105.0" style="-fx-background-color: FF00DE;" text="Ready">
+                     <font>
+                        <Font name="Serif Regular" size="25.0" />
+                     </font>
+                  </Button>
+                  <ImageView fitHeight="105.0" fitWidth="140.0" layoutX="321.0" layoutY="181.0" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagens/imagensFarm/skinS2.png" />
+                     </image>
+                  </ImageView>
+                  <Text layoutX="26.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1K" />
+                  <ImageView fitHeight="16.0" fitWidth="17.0" layoutX="9.0" layoutY="151.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagens/coin.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="16.0" fitWidth="17.0" layoutX="9.0" layoutY="234.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagens/coin.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="16.0" fitWidth="17.0" layoutX="9.0" layoutY="316.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagens/coin.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="16.0" fitWidth="17.0" layoutX="465.0" layoutY="236.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagens/coin.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="16.0" fitWidth="17.0" layoutX="465.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagens/coin.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="16.0" fitWidth="17.0" layoutX="465.0" layoutY="316.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagens/coin.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="16.0" fitWidth="17.0" layoutX="236.0" layoutY="197.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagens/coin.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="16.0" fitWidth="17.0" layoutX="314.0" layoutY="286.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagens/coin.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="16.0" fitWidth="17.0" layoutX="146.0" layoutY="286.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagens/coin.png" />
+                     </image>
+                  </ImageView>
+                  <Text layoutX="26.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="10K" />
+                  <Text layoutX="26.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="50K" />
+                  <Text layoutX="162.0" layoutY="299.0" strokeType="OUTSIDE" strokeWidth="0.0" text="???" />
+                  <Text layoutX="481.0" layoutY="248.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gratis" />
+                  <Text layoutX="254.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="???" />
+                  <Text layoutX="330.0" layoutY="298.0" strokeType="OUTSIDE" strokeWidth="0.0" text="???" />
+                  <Text layoutX="481.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="100K" />
+                  <Text layoutX="481.0" layoutY="329.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1M" />
+                  <Label fx:id="skin3" layoutX="30.0" layoutY="254.0" prefHeight="63.0" prefWidth="69.0" style="-fx-background-color: #000000;" text=" ???" textFill="WHITE">
+                     <font>
+                        <Font size="34.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="skin2" layoutX="27.0" layoutY="167.0" prefHeight="69.0" prefWidth="69.0" style="-fx-background-color: #000000;" text=" ???" textAlignment="RIGHT" textFill="WHITE">
+                     <font>
+                        <Font size="34.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="skin1" layoutX="21.0" layoutY="71.0" prefHeight="76.0" prefWidth="81.0" style="-fx-background-color: #000000;" text="  ???" textFill="WHITE">
+                     <font>
+                        <Font size="34.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="skinS2" layoutX="138.0" layoutY="194.0" prefHeight="82.0" prefWidth="96.0" style="-fx-background-color: #000000;" text="   ???" textFill="WHITE">
+                     <font>
+                        <Font size="34.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="skin4" layoutX="474.0" layoutY="86.0" prefHeight="63.0" prefWidth="48.0" style="-fx-background-color: #000000;" text="???" textFill="WHITE">
+                     <font>
+                        <Font size="34.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="skinS1" layoutX="265.0" layoutY="118.0" prefHeight="76.0" prefWidth="63.0" style="-fx-background-color: #000000;" text=" ???" textFill="WHITE">
+                     <font>
+                        <Font size="34.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="skinS3" layoutX="332.0" layoutY="197.0" prefHeight="89.0" prefWidth="78.0" style="-fx-background-color: #000000;" text="  ???" textFill="WHITE">
+                     <font>
+                        <Font size="34.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="skin6" layoutX="493.0" layoutY="254.0" prefHeight="63.0" prefWidth="63.0" style="-fx-background-color: #000000;" text=" ???" textFill="WHITE">
+                     <font>
+                        <Font size="34.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="skin5" layoutX="477.0" layoutY="169.0" opacity="0.0" prefHeight="70.0" prefWidth="72.0" style="-fx-background-color: #000000;" text="    ???" textFill="WHITE">
+                     <font>
+                        <Font size="34.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane fx:id="configStatus" layoutX="173.0" layoutY="18.0" prefHeight="387.0" prefWidth="254.0">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" height="338.0" layoutX="12.0" layoutY="7.0" stroke="BLACK" strokeType="INSIDE" width="231.0">
+                     <fill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="1.0" opacity="0.0" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </LinearGradient>
+                     </fill>
+                  </Rectangle>
+                  <Text fill="WHITE" layoutX="82.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="STATUS">
+                     <font>
+                        <Font name="Serif Regular" size="24.0" />
+                     </font>
+                  </Text>
+                  <Separator layoutX="65.0" layoutY="39.0" prefHeight="3.0" prefWidth="124.0" />
+                  <ImageView fitHeight="50.0" fitWidth="48.0" layoutX="28.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../../Users/Gabriel%20Souza/Downloads/power.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="45.0" fitWidth="48.0" layoutX="28.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagens/coin.png" />
+                     </image></ImageView>
+                  <Text fill="WHITE" layoutX="51.0" layoutY="187.0" strokeType="OUTSIDE" strokeWidth="0.0" text="X">
+                     <font>
+                        <Font name="Serif Regular" size="18.0" />
+                     </font>
+                  </Text>
+                  <ImageView fitHeight="50.0" fitWidth="60.0" layoutX="25.0" layoutY="218.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagens/click.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" layoutX="26.0" layoutY="278.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagens/Velocidade.png" />
+                     </image>
+                  </ImageView>
+                  <Text fx:id="sPower" fill="WHITE" layoutX="81.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="sMultiCoins" fill="WHITE" layoutX="81.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="sAuto" fill="WHITE" layoutX="81.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="sVelo" fill="WHITE" layoutX="82.0" layoutY="312.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="149.99999999999994">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Button fx:id="readyStatus" layoutX="100.0" layoutY="347.0" mnemonicParsing="false" style="-fx-background-color: #000000;" text="ready" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
                </children>
             </Pane>
          </children>
@@ -425,10 +663,10 @@
          <children>
             <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true">
                <image>
-                  <Image url="@../imagens/Fim%20de%20jogo.jpg" />
+                  <Image url="@../../../../../../Users/Gabriel%20Souza/Desktop/526ab2346bc63129193fb9b86b60d24b.jpg" />
                </image>
             </ImageView>
-            <Label layoutX="134.0" layoutY="35.0" text="Fim de jogo" textAlignment="CENTER" textFill="#0dd8ff" textOverrun="CLIP">
+            <Label layoutX="166.0" layoutY="30.0" text="THE END" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
                <font>
                   <Font name="Serif Regular" size="63.0" />
                </font>
