@@ -16,23 +16,34 @@
 - JavaFX  
 - Scene Builder 
 
+# Layout
+![Layout](https://github.com/GabrielSz2/imagens/blob/main/Loading.png)
+![Layout](https://github.com/GabrielSz2/imagens/blob/main/start.png)
+![Layout](https://github.com/GabrielSz2/imagens/blob/main/game.png)
+
+
 # Instalação e Execução  
-## Pré-requisito: Java 21 & JavaFX 23
+## Pré-requisito: Java 21
 
 ```bash
 # 1. Clone o Repositório:
-       git clone https://github.com/GabrielSz2/Game-Click
+       git clone -n https://github.com/GabrielSz2/Game-Click
 
 # 2. Entre na pasta do projeto:
        cd Game-Click
+  
+# 3. Clone o executavel:
+       git checkout HEAD executable
 
-# 3. Execute o programa:
-       java -jar Game-Click.jar
+# 4. Entre na pasta do exe:
+       cd executable
 
+# 5. Entre no cmd:
+       cmd.exe
+
+# 6. Rode o game:
+       cmd.exe /c run.bat 
 ```
-
-#TERMINAR
-
 
 # Autor
 Gabriel Souza
