@@ -20,6 +20,9 @@
 ![Layout](https://github.com/GabrielSz2/imagens/blob/main/Loading.png)
 ![Layout](https://github.com/GabrielSz2/imagens/blob/main/start.png)
 ![Layout](https://github.com/GabrielSz2/imagens/blob/main/game.png)
+![Layout](https://github.com/GabrielSz2/imagens/blob/main/wall.png)
+![Layout](https://github.com/GabrielSz2/imagens/blob/main/skins.png)
+![Layout](https://github.com/GabrielSz2/imagens/blob/main/pause.png)
 
 
 # Instalação e Execução  
