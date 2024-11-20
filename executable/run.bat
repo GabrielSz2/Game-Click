@@ -1,6 +1,6 @@
 @echo off
 
-set EXECUTABLE_PATH=%USERPROFILE%\Desktop\executable
+set EXECUTABLE_PATH=%USERPROFILE%\Desktop\Game-Click\executable
 
 set JAVAFX_PATH=%EXECUTABLE_PATH%\javafx-sdk-23.0.1\lib
 
